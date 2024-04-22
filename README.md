@@ -15,7 +15,7 @@ export AWS_PROFILE=sno-llama
 export AWS_DEFAULT_REGION=us-east-2
 export AWS_DEFAULT_ZONES=["us-east-2c"]
 export CLUSTER_NAME=sno
-export BASE_DOMAIN=sandbox1604.opentlc.com
+export BASE_DOMAIN=sandbox.opentlc.com
 export PULL_SECRET=$(cat ~/tmp/pull-secret)
 export SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
 export INSTANCE_TYPE=g6.4xlarge
@@ -30,7 +30,7 @@ curl -Ls https://raw.githubusercontent.com/eformat/sno-for-100/main/sno-for-100.
 Configure OAuth with htpasswd.
 
 ```bash
-export CLUSTER_DOMAIN=apps.sno.sandbox1604.opentlc.com
+export CLUSTER_DOMAIN=apps.sno.sandbox.opentlc.com
 oc login --server=https://api.${CLUSTER_DOMAIN##apps.}:6443 -u kubeadmin -p <PASSWORD>
 
 export ADMIN_PASSWORD=<ADMIN PASSWORD>
@@ -272,7 +272,7 @@ EOF
 ```
 
 ```bash
-cat <<EOF | oc create -f -
+cat <<'EOF' | oc create -f -
 apiVersion: nfd.openshift.io/v1
 kind: NodeFeatureDiscovery
 metadata:
@@ -324,7 +324,6 @@ EOF
 ```
 
 Configure the NVidia GPU Operator.
-
 
 ```bash
 cat <<EOF | oc create -f -
