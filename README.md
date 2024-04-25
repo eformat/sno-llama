@@ -515,4 +515,10 @@ Now open RHOAI and Login.
 
 Run the jupyter Notebook - "PyTorch, CUDA v11.8, Python v3.9, PyTorch v2.0, Small, 1 NVIDIA GPU Accelerator".
 
+Make sure you give your notebook plenty of local storage (50-100GB).
+
+#### llama2
 Open the [sno-llama2.ipynb](sno-llama2.ipynb) notebook and have a play. Use the llama2 Swagger UI for trying out chat completions.
+
+#### llama3
+Open the [sno-llama3.ipynb](sno-llama3.ipynb) notebook and have a play.
