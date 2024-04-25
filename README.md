@@ -36,6 +36,10 @@ oc login --server=https://api.${CLUSTER_DOMAIN##apps.}:6443 -u kubeadmin -p <PAS
 export ADMIN_PASSWORD=<ADMIN PASSWORD>
 htpasswd -bBc /tmp/htpasswd admin ${ADMIN_PASSWORD}
 
+
+
+
+
 oc adm policy add-cluster-role-to-user cluster-admin admin
 oc delete secret htpasswdidp-secret -n openshift-config
 oc create secret generic htpasswdidp-secret -n openshift-config --from-file=/tmp/htpasswd
