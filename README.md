@@ -1,6 +1,6 @@
 # SNO on Spot running llama LLM's
 
-A simple method to provision RHOAI on Single Node OpenShift to try out llama LLM's.
+A simple method to provision RHOAI on Single Node OpenShift to try out different LLM's including meta's llama and ibm/redhat granite models.
 
 We use a g6.4xlarge on aws spot - which comes with a modern Nvidia L4 (20GB), 16 vCPU, 64 GiB RAM.
 
@@ -551,3 +551,6 @@ Open the [sno-llama2.ipynb](sno-llama2.ipynb) notebook and have a play. Use the 
 
 #### llama3
 Open the [sno-llama3.ipynb](sno-llama3.ipynb) notebook and have a play.
+
+#### granite
+Open the [sno-granite.ipynb](sno-granite.ipynb) notebook and have a play.
