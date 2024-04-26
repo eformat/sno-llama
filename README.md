@@ -36,10 +36,6 @@ oc login --server=https://api.${CLUSTER_DOMAIN##apps.}:6443 -u kubeadmin -p <PAS
 export ADMIN_PASSWORD=<ADMIN PASSWORD>
 htpasswd -bBc /tmp/htpasswd admin ${ADMIN_PASSWORD}
 
-
-
-
-
 oc adm policy add-cluster-role-to-user cluster-admin admin
 oc delete secret htpasswdidp-secret -n openshift-config
 oc create secret generic htpasswdidp-secret -n openshift-config --from-file=/tmp/htpasswd
@@ -77,6 +73,9 @@ oc -n openshift-ingress-operator patch ingresscontroller default --patch '{"spec
 Add 200GB extra Volume. Use ThinLVM from ODS and set as default storage class. 
 
 ```bash
+export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
+export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
+
 export INSTANCE_ID=$(aws ec2 describe-instances \
 --query "Reservations[].Instances[].InstanceId" \
 --filters "Name=tag-value,Values=$CLUSTER_NAME-*-master-0" "Name=instance-state-name,Values=running" \
@@ -131,6 +130,8 @@ spec:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
 EOF
+
+watch oc get csv -A
 
 cat <<EOF | oc apply -f-
 apiVersion: lvm.topolvm.io/v1alpha1
@@ -276,6 +277,10 @@ EOF
 ```
 
 ```bash
+watch oc get csv -A
+```
+
+```bash
 cat <<'EOF' | oc create -f -
 apiVersion: nfd.openshift.io/v1
 kind: NodeFeatureDiscovery
@@ -370,7 +375,16 @@ EOF
 ```
 
 ```bash
+watch oc get csv -A
+```
+
+```bash
 oc get csv -n nvidia-gpu-operator gpu-operator-certified.v23.9.2 -ojsonpath={.metadata.annotations.alm-examples} | jq .[0] | oc create -n nvidia-gpu-operator -f-
+```
+
+```bash
+oc describe node | egrep 'Roles|pci' | grep -v master
+oc describe node | sed '/Capacity/,/System/!d;/System/d'
 ```
 
 Configure the NVidia GPU OpenShift UI Plugin.
@@ -412,10 +426,11 @@ oc patch clusterpolicies.nvidia.com/gpu-cluster-policy \
 oc label node \
     --selector=nvidia.com/gpu.product=NVIDIA-L4 \
     nvidia.com/device-plugin.config=nvidia-l4
+```
 
+```bash
 oc get events -n nvidia-gpu-operator --sort-by='.lastTimestamp'
-
-oc describe node
+oc describe node | sed '/Capacity/,/System/!d;/System/d'
 ```
 
 Configure the RHOAI Data Science Pipelines operator v2.
@@ -435,7 +450,9 @@ metadata:
   labels:
     openshift.io/cluster-monitoring: "true"
 EOF
+```
 
+```bash
 cd ${WORKING_DIR}
 make deploy OPERATOR_NS=${ODH_NS}
 oc get pods -n ${ODH_NS}
@@ -469,46 +486,54 @@ spec:
 EOF
 ```
 
-Configure the RHOAI Data Science Cluster.
-
 ```bash
+watch oc get csv -A
+```
+
+[Configure the RHOAI Data Science Cluster](https://github.com/opendatahub-io/opendatahub-operator#example-datasciencecluster)
+
+```yaml
 cat <<EOF | oc create -f -
 apiVersion: datasciencecluster.opendatahub.io/v1
 kind: DataScienceCluster
 metadata:
   name: default-dsc
   namespace: redhat-ods-operator
-  labels:
-    app.kubernetes.io/name: datasciencecluster
-    app.kubernetes.io/instance: default-dsc
-    app.kubernetes.io/part-of: rhods-operator
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/created-by: rhods-operator
 spec:
   components:
     codeflare:
       managementState: Managed
-    kserve:
-      serving:
-        ingressGateway:
-          certificate:
-            type: SelfSigned
-        managementState: Managed
-        name: knative-serving
-      managementState: Managed
-    ray:
-      managementState: Managed
-    kueue:
-      managementState: Managed
-    workbenches:
-      managementState: Managed
     dashboard:
-      managementState: Managed
-    modelmeshserving:
       managementState: Managed
     datasciencepipelines:
       managementState: Managed
+    kserve:
+      managementState: Managed
+      serving:
+      ingressGateway:
+        certificate:
+          type: SelfSigned
+      managementState: Managed
+      name: knative-serving
+    kueue:
+      managementState: Managed
+    modelmeshserving:
+      managementState: Managed
+    modelregistry:
+      managementState: Managed
+    ray:
+      managementState: Managed
+    #trainingoperator:
+    #  managementState: Managed
+    #trustyai:
+    #  managementState: Managed
+    workbenches:
+      managementState: Managed
 EOF
+```
+
+```bash
+oc get pods -n redhat-ods-applications
 ```
 
 Now open RHOAI and Login.
