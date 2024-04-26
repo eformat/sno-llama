@@ -35,8 +35,10 @@ oc login --server=https://api.${CLUSTER_DOMAIN##apps.}:6443 -u kubeadmin -p <PAS
 
 export ADMIN_PASSWORD=<ADMIN PASSWORD>
 htpasswd -bBc /tmp/htpasswd admin ${ADMIN_PASSWORD}
+htpasswd -bB /tmp/htpasswd admin2 ${ADMIN2_PASSWORD}
 
 oc adm policy add-cluster-role-to-user cluster-admin admin
+oc adm policy add-cluster-role-to-user cluster-admin admin2
 oc delete secret htpasswdidp-secret -n openshift-config
 oc create secret generic htpasswdidp-secret -n openshift-config --from-file=/tmp/htpasswd
 
@@ -541,6 +543,8 @@ Now open RHOAI and Login.
 Run the jupyter Notebook - "PyTorch, CUDA v11.8, Python v3.9, PyTorch v2.0, Small, 1 NVIDIA GPU Accelerator".
 
 Make sure you give your notebook plenty of local storage (50-100GB).
+
+You can login as admin or admin2 and work on each notebook separately to see GPU timeslicing in action.
 
 #### llama2
 Open the [sno-llama2.ipynb](sno-llama2.ipynb) notebook and have a play. Use the llama2 Swagger UI for trying out chat completions.
