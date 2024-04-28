@@ -135,7 +135,11 @@ spec:
 EOF
 
 watch oc get csv -A
+```
 
+Make sure we have sno-lvm on the second attached disk only as spot conversion makes ami disk bigger so can get allocated to lvm unintentionally.
+
+```bash
 cat <<EOF | oc apply -f-
 apiVersion: lvm.topolvm.io/v1alpha1
 kind: LVMCluster
@@ -150,10 +154,89 @@ spec:
          name: thin-pool-1
          overprovisionRatio: 10
          sizePercent: 90
+       deviceSelector:
+         paths:
+         - /dev/disk/by-path/pci-0000:33:00.0-nvme-1
+
 EOF
 
 oc annotate sc/lvms-vgsno storageclass.kubernetes.io/is-default-class=true
 oc annotate sc/gp3-csi storageclass.kubernetes.io/is-default-class-
+```
+
+We will also use noobaa multicloud gateway for s3 storage.
+
+```bash
+cat <<EOF | oc apply -f-
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: odf-operator
+  namespace: openshift-storage
+spec:
+  channel: stable-4.15
+  installPlanApproval: Automatic
+  name: odf-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+
+watch oc -n openshift-storage get csv
+```
+
+```bash
+cat <<EOF | oc apply -f-
+apiVersion: odf.openshift.io/v1alpha1
+kind: StorageSystem
+metadata:
+  name: ocs-storagecluster-storagesystem
+  namespace: openshift-storage
+spec:
+  kind: storagecluster.ocs.openshift.io/v1
+  name: ocs-storagecluster
+  namespace: openshift-storage
+EOF
+```
+
+Remove the CPU Limits for on Nooba so we can better utilize resources.
+
+```bash
+cat <<EOF | oc apply -f-
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  name: ocs-storagecluster
+  namespace: openshift-storage
+spec:
+  multiCloudGateway:
+    dbStorageClassName: lvms-vgsno
+    endpoints:
+      maxCount: 1
+      minCount: 1
+    reconcileStrategy: standalone
+  resourceProfile: balanced
+  resources:
+    noobaa-core:
+      requests:
+        cpu: 500m
+        memory: 4Gi
+    noobaa-db:
+      requests:
+        cpu: 500m
+        memory: 4Gi
+    noobaa-endpoint:
+      requests:
+        cpu: 500m
+        memory: 4Gi
+EOF
+```
+
+Check noobaa status and how to connect to s3.
+
+```bash
+oc project openshift-storage
+noobaa status
+oc describe noobaa
 ```
 
 Try out some performance enhancements for your SNO cluster.
@@ -436,6 +519,47 @@ oc get events -n nvidia-gpu-operator --sort-by='.lastTimestamp'
 oc describe node | sed '/Capacity/,/System/!d;/System/d'
 ```
 
+Deploy Service Mesh, Serverless pre-requisites for Kserve.
+
+```bash
+cat <<EOF | oc create -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/servicemeshoperator.openshift-operators: ""
+  name: servicemeshoperator
+  namespace: openshift-operators
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: servicemeshoperator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+
+cat <<EOF | oc create -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/serverless-operator.openshift-serverless: ""
+  name: serverless-operator
+  namespace: openshift-operators
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: serverless-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+EOF
+```
+
+```bash
+watch oc -n openshift-operators get csv
+```
+
+
 Configure the RHOAI Data Science Pipelines operator v2.
 
 ```bash
@@ -538,6 +662,96 @@ EOF
 ```bash
 oc get pods -n redhat-ods-applications
 ```
+
+Remove the CPU Limits on the notebooks and server so we can better utilize resources.
+
+```bash
+cat <<EOF | oc apply -f-
+apiVersion: opendatahub.io/v1alpha
+kind: OdhDashboardConfig
+metadata:
+  annotations:
+    internal.config.kubernetes.io/previousKinds: OdhDashboardConfig
+    internal.config.kubernetes.io/previousNames: odh-dashboard-config
+    internal.config.kubernetes.io/previousNamespaces: default
+  labels:
+    app.kubernetes.io/part-of: rhods-dashboard
+    app.opendatahub.io/rhods-dashboard: "true"
+  name: odh-dashboard-config
+  namespace: redhat-ods-applications
+spec:
+  dashboardConfig:
+    disableAcceleratorProfiles: false
+    disableBYONImageStream: false
+    disableBiasMetrics: false
+    disableClusterManager: false
+    disableCustomServingRuntimes: false
+    disableDistributedWorkloads: true
+    disableISVBadges: false
+    disableInfo: false
+    disableKServe: false
+    disableModelMesh: false
+    disableModelServing: false
+    disablePerformanceMetrics: false
+    disablePipelines: false
+    disableProjectSharing: false
+    disableProjects: false
+    disableSupport: false
+    disableTracking: false
+    enablement: true
+  groupsConfig:
+    adminGroups: rhods-admins
+    allowedGroups: system:authenticated
+  modelServerSizes:
+  - name: Small
+    resources:
+      requests:
+        cpu: "1"
+        memory: 4Gi
+  - name: Medium
+    resources:
+      requests:
+        cpu: "4"
+        memory: 8Gi
+  - name: Large
+    resources:
+      requests:
+        cpu: "6"
+        memory: 16Gi
+  notebookController:
+    enabled: true
+    notebookNamespace: rhods-notebooks
+    notebookTolerationSettings:
+      enabled: false
+      key: NotebooksOnly
+    pvcSize: 50Gi
+  notebookSizes:
+  - name: Small
+    resources:
+      requests:
+        cpu: "1"
+        memory: 8Gi
+  - name: Medium
+    resources:
+      requests:
+        cpu: "3"
+        memory: 24Gi
+  - name: Large
+    resources:
+      requests:
+        cpu: "7"
+        memory: 56Gi
+  - name: X Large
+    resources:
+      requests:
+        cpu: "15"
+        memory: 120Gi
+  templateDisablement: []
+  templateOrder: []
+EOF
+```
+
+
 
 Now open RHOAI and Login.
 
