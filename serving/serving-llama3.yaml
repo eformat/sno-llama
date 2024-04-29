@@ -1,0 +1,83 @@
+---
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  annotations:
+    opendatahub.io/accelerator-name: migrated-gpu
+    opendatahub.io/apiProtocol: REST
+    opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
+    opendatahub.io/template-display-name: LLamaCPP
+    opendatahub.io/template-name: llamacpp
+    openshift.io/display-name: sno-llama3
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: sno-llama3
+  namespace: llama-serving
+spec:
+  builtInAdapter:
+    modelLoadingTimeoutMillis: 90000
+  containers:
+  - env:
+    - name: MODELNAME
+      value: Meta-Llama-3-8B-Instruct-Q8_0.gguf
+    - name: MODELLOCATION
+      value: /mnt/models
+    - name: CHAT_FORMAT
+      value: ""
+    image: image-registry.openshift-image-registry.svc:5000/openshift/llama-serving
+    name: kserve-container
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    resources:
+      requests:
+        cpu: 300m
+        memory: 500Mi
+    volumeMounts:
+    - mountPath: /dev/shm
+      name: shm
+  multiModel: false
+  supportedModelFormats:
+  - autoSelect: true
+    name: gguf
+  volumes:
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 2Gi
+    name: shm
+---
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    openshift.io/display-name: sno-llama3
+    serving.knative.openshift.io/enablePassthrough: "true"
+    sidecar.istio.io/inject: "true"
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
+  finalizers:
+  - inferenceservice.finalizers
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: sno-llama3
+  namespace: llama-serving
+spec:
+  predictor:
+    maxReplicas: 1
+    minReplicas: 1
+    model:
+      modelFormat:
+        name: gguf
+      name: ""
+      resources:
+        limits:
+          nvidia.com/gpu: "1"
+        requests:
+          nvidia.com/gpu: "1"
+      runtime: sno-llama3
+      storage:
+        key: connection-noobaa
+        path: Meta-Llama-3-8B-Instruct-Q8_0.gguf
+    tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu
+      operator: Exists

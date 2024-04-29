@@ -119,6 +119,7 @@ Create ServingRuntime and InferenceService instances.
 ```bash
 oc apply -f serving-granite.yaml
 oc apply -f serving-llama2.yaml
+oc apply -f serving-llama3.yaml
 ```
 
 ### Query
@@ -136,9 +137,12 @@ Or call from CLI.
 # Choose an model serving endpoint to query
 HOST=https://sno-granite-llama-serving.apps.sno.sandbox.opentlc.com
 HOST=https://sno-llama2-llama-serving.apps.sno.sandbox.opentlc.com
+HOST=https://sno-llama3-llama-serving.apps.sno.sandbox.opentlc.com
 
+# see which model is being served
 curl -k -X GET $HOST/v1/models -H 'accept: application/json'
 
+# try some example chat completions
 curl -s -k -X 'POST' \
   "$HOST/v1/completions" \
   -H 'accept: application/json' \
@@ -151,6 +155,7 @@ curl -s -k -X 'POST' \
   ]
 }' | jq .
 
+# go the NZ All Blacks !!
 curl -s -k -X 'POST' \
   "$HOST/v1/completions" \
   -H 'accept: application/json' \
