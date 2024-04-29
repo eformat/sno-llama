@@ -843,3 +843,8 @@ Open the [sno-llama3.ipynb](sno-llama3.ipynb) notebook and have a play.
 
 #### granite
 Open the [sno-granite.ipynb](sno-granite.ipynb) notebook and have a play.
+
+
+### Model Serving
+
+Use RHOAI to serve the models with a llama-cpp custom runtime. See [Serving README.md](serving/README.md)
