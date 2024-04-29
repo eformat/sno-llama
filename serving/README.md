@@ -110,6 +110,11 @@ oc apply -f serving-llama2.yaml
 
 Browse to the llama-cpp docs SwaggerUI.
 
+```bash
+https://sno-granite-llama-serving.apps.sno.sandbox.opentlc.com/docs
+https://sno-llama2-llama-serving.apps.sno.sandbox.opentlc.com/docs
+```
+
 Or call from CLI.
 
 ```bash
