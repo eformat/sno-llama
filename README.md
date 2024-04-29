@@ -4,7 +4,7 @@ A simple method to provision RHOAI on Single Node OpenShift to try out different
 
 We use a g6.4xlarge on aws spot - which comes with a modern Nvidia L4 (20GB), 16 vCPU, 64 GiB RAM.
 
-Running OpenShift 4.15.9 Single Node. Configure Nvidia time slicing to parallel share the GPU.
+Running OpenShift 4.15.9 Single Node. We configure Nvidia time slicing to parallel share the GPU for running jupyter notebooks and model serving.
 
 ## Install OpenShift
 
