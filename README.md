@@ -8,7 +8,7 @@ Running OpenShift 4.15.9 Single Node. Configure Nvidia time slicing to parallel 
 
 ## Install OpenShift
 
-Install OCP.
+Install OCP using [SNO on SPOT](https://developers.redhat.com/blog/2023/02/08/sno-spot).
 
 ```bash
 export AWS_PROFILE=sno-llama
