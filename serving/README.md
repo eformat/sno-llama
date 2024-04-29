@@ -2,6 +2,21 @@
 
 Serve our models using custom llama-cpp serving runtime.
 
+### Build our custom Serving Runtime
+
+Start the build in OpenShift.
+
+```bash
+oc -n openshift new-build \
+  --strategy docker --dockerfile - --name llama-serving < serving/Dockerfile 
+```
+
+Monitor the build.
+
+```bash
+oc -n openshift logs llama-serving-1-build -f
+```
+
 ### Copy Models to S3 Noobaa
 
 Once you have run the notebooks, copy the downloaded models into S3.
