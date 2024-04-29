@@ -13,7 +13,7 @@ pip install awscli
 ```bash
 export NOOBAA_ACCESS_KEY=$(oc get secret noobaa-admin -n openshift-storage -o json | jq -r '.data.AWS_ACCESS_KEY_ID|@base64d')
 export NOOBAA_SECRET_KEY=$(oc get secret noobaa-admin -n openshift-storage -o json | jq -r '.data.AWS_SECRET_ACCESS_KEY|@base64d')
-alias s3='AWS_ACCESS_KEY_ID=$NOOBAA_ACCESS_KEY AWS_SECRET_ACCESS_KEY=$NOOBAA_SECRET_KEY aws --endpoint https://s3-openshift-storage.apps.sno.sandbox1604.opentlc.com:443 s3'
+alias s3='AWS_ACCESS_KEY_ID=$NOOBAA_ACCESS_KEY AWS_SECRET_ACCESS_KEY=$NOOBAA_SECRET_KEY aws --endpoint https://s3-openshift-storage.apps.sno.sandbox.opentlc.com:443 s3'
 s3 ls
 ```
 
@@ -93,7 +93,7 @@ stringData:
   AWS_ACCESS_KEY_ID: <NOOBAA_ACCESS_KEY>
   AWS_DEFAULT_REGION: us-east-1
   AWS_S3_BUCKET: models
-  AWS_S3_ENDPOINT: https://s3-openshift-storage.apps.sno.sandbox1604.opentlc.com:443
+  AWS_S3_ENDPOINT: https://s3-openshift-storage.apps.sno.sandbox.opentlc.com:443
   AWS_SECRET_ACCESS_KEY: <NOOBAA_SECRET_KEY>
 type: Opaque
 EOF
@@ -114,8 +114,8 @@ Or call from CLI.
 
 ```bash
 # Choose an model serving endpoint to query
-HOST=https://sno-granite-llama-serving.apps.sno.sandbox1604.opentlc.com
-HOST=https://sno-llama2-llama-serving.apps.sno.sandbox1604.opentlc.com
+HOST=https://sno-granite-llama-serving.apps.sno.sandbox.opentlc.com
+HOST=https://sno-llama2-llama-serving.apps.sno.sandbox.opentlc.com
 
 curl -k -X GET $HOST/v1/models -H 'accept: application/json'
 
