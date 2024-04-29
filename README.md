@@ -2,7 +2,7 @@
 
 A simple method to provision RHOAI on Single Node OpenShift to try out different quantized LLM's including meta's llama2,3 and ibm/redhat granite models.
 
-We use a g6.4xlarge on aws spot - which comes with a modern Nvidia L4 (20GB), 16 vCPU, 64 GiB RAM.
+We use a g6.4xlarge on aws spot - which comes with a modern Nvidia L4 (24GB), 16 vCPU, 64 GiB RAM.
 
 Running OpenShift 4.15 Single Node. We configure Nvidia time slicing to parallel share the GPU for running jupyter notebooks and model serving.
 
