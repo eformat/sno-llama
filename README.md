@@ -6,7 +6,7 @@ We use a g6.4xlarge on aws spot - which comes with a modern Nvidia L4 (20GB), 16
 
 Running OpenShift 4.15.9 Single Node. Configure Nvidia time slicing to parallel share the GPU.
 
-## Installation
+## Install OpenShift
 
 Install OCP.
 
@@ -26,6 +26,8 @@ mkdir -p ~/tmp/sno-${AWS_PROFILE} && cd ~/tmp/sno-${AWS_PROFILE}
 
 curl -Ls https://raw.githubusercontent.com/eformat/sno-for-100/main/sno-for-100.sh | bash -s -- -d
 ```
+
+## Configure OpenShift and Install RHOAI
 
 Configure OAuth with htpasswd.
 
@@ -138,6 +140,15 @@ watch oc get csv -A
 ```
 
 Make sure we have sno-lvm on the second attached disk only as spot conversion makes ami disk bigger so can get allocated to lvm unintentionally.
+
+Obtain disk-by-path for second disk `nvme2n1`
+
+```bash
+oc debug node/ip-10-0-83-218.us-east-2.compute.internal
+chroot /host
+lsblk
+ls -lart /dev/disk/by-path/
+```
 
 ```bash
 cat <<EOF | oc apply -f-
@@ -751,7 +762,49 @@ spec:
 EOF
 ```
 
+### CPU Limits and Requests
 
+CPU Requests are limiting factor since we only have 16 vCPU's in g6.4xlarge - [stop setting CPU Limits people!](https://home.robusta.dev/blog/stop-using-cpu-limits/)
+
+There are a number of efforts upstream to make resource limits and requests runable via DSC, KNative, Istio etc. For now we can do this once operators are installed:
+
+```bash
+# scale the RHOAI operaror down
+oc -n redhat-ods-operator scale deployment/rhods-operator --replicas=0
+
+# reduce deployment count
+oc -n redhat-ods-applications scale deployment rhods-dashboard --replicas=1
+oc -n redhat-ods-applications scale deployment odh-model-controller --replicas=1
+oc -n redhat-ods-applications scale deployment modelmesh-controller --replicas=1
+oc -n redhat-ods-applications scale deployment codeflare-operator-manager --replicas=0
+
+# scale istio replicas
+oc -n istio-system scale $(oc -n istio-system get deployment -o name) --replicas=1
+
+# Knative - once running - scale the operator to zero else it just scales it all back up
+oc -n openshift-operators scale deployments knative-openshift --replicas=0
+oc -n openshift-operators scale deployment knative-openshift-ingress --replicas=0
+oc -n openshift-operators scale deployment knative-operator-webhook --replicas=0
+oc delete hpa --all -n knative-serving
+
+# scale knative serving to zero, then to 1 replica
+oc -n knative-serving scale $(oc -n knative-serving get deployment -o name) --replicas=0
+oc patch deployment/istio-egressgateway -n istio-system -p '{"spec":{"template":{"spec":{"containers":[{"name":"istio-proxy","resources":{"limits":{"cpu":"500m","memory":"1Gi"},"requests":{"cpu":"10m","memory":"128Mi"}}}]}}}}' --type=strategic
+oc patch deployment/istio-ingressgateway -n istio-system -p '{"spec":{"template":{"spec":{"containers":[{"name":"istio-proxy","resources":{"limits":{"cpu":"500m","memory":"1Gi"},"requests":{"cpu":"10m","memory":"128Mi"}}}]}}}}' --type=strategic
+oc -n knative-serving scale $(oc -n knative-serving get deployment -o name) --replicas=1
+
+# delete any pending pods
+oc get pods -n knative-serving | grep Pending | awk '{system("oc -n knative-serving delete pod " $1 )}'
+```
+
+With these scaled down - we have some headroom - but you will need to scale operators back up for various tasks.
+
+```bash
+NODENAME                                   Allocatable CPU  Allocatable MEM  Request CPU  (%)    Limit CPU  (%)     Request MEM  (%)    Limit MEM  (%)
+ip-10-0-83-218.us-east-2.compute.internal  15500m           62254244Ki       9981m        (64%)  22450m     (144%)  33674Mi      (55%)  44128Mi    (72%)
+```
+
+### Notebooks
 
 Now open RHOAI and Login.
 
