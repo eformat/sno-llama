@@ -1,4 +1,4 @@
-# SNO on Spot running llama LLM's
+# 🦙🦙🦙 SNO on Spot running llama LLM's 🦙🦙🦙
 
 A simple method to provision RHOAI on Single Node OpenShift to try out different LLM's including meta's llama and ibm/redhat granite models.
 
