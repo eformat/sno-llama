@@ -1,6 +1,6 @@
 # 🦙🦙🦙 SNO on Spot running LLM's 🦙🦙🦙
 
-A simple method to provision RHOAI on Single Node OpenShift to try out different LLM's including meta's llama and ibm/redhat granite models.
+A simple method to provision RHOAI on Single Node OpenShift to try out different quantized LLM's including meta's llama2,3 and ibm/redhat granite models.
 
 We use a g6.4xlarge on aws spot - which comes with a modern Nvidia L4 (20GB), 16 vCPU, 64 GiB RAM.
 
