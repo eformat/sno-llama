@@ -255,8 +255,10 @@ Try out some performance enhancements for your SNO cluster.
 - Encapsulating mount namespaces
 - Configuring crun as the default container runtime
 - 500 pods max
+- We want to set up custom LVM Configuration else we can get annoying PVID issues in RHEL9 when the SPOT instance reboots. [See here for details.](https://access.redhat.com/solutions/6889951#FN.1).
 
 Run this post install, your SNO will reboot.
+
 
 ```bash
 cat <<EOF | oc apply -f -
@@ -330,6 +332,25 @@ metadata:
   labels:
     custom-kubelet: large-pods
   name: master
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-lvm-conf
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+        - contents:
+            compression: gzip
+            source: data:;base64,H4sIAAAAAAAC/zyNQarDMAwF9z6F8Pob/gVyklKMoiqxiWqltpNNyN2LQujuMUIzpGXKMxyne/GeiRscDgBgaxxvMmVhGOD/4o2xUoqTVjsXfHODATyKeHc6FFHCnrWYUfQSj0jLttpqiUVszKIjyp3qKZdIiWmJutqvGR/gw8f/gQ8Bt66h8oq5enhahXref5VvAAAA///jFypswgAAAA==
+          mode: 420
+          overwrite: true
+          path: /etc/lvm/lvm.conf
 EOF
 ```
 
