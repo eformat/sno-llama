@@ -1,0 +1,3 @@
+#!/bin/bash
+# handy script to display node usage
+oc describe nodes |  awk 'BEGIN{printf "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s\n","NODENAME","Allocatable CPU","Allocatable MEM","Request CPU","(%)","Limit CPU","(%)","Request MEM","(%)","Limit MEM","(%)"}{if($1 == "Name:"){name=$2};if($1 ~ "Allocatable:"){while($1 != "System"){if($1 == "cpu:"){Alloc_cpu=$2};if($1 == "memory:"){Alloc_mem=$2};getline}};if($1 == "Resource"){while($1 != "Events:"){if($1 == "cpu"){req_cpu=$2;preq_cpu=$3;lim_cpu=$4;plim_cpu=$5};if($1 == "memory"){req_mem=$2;preq_mem=$3;lim_mem=$4;plim_mem=$5};getline};printf "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s\n",name,Alloc_cpu,Alloc_mem,req_cpu,preq_cpu,lim_cpu,plim_cpu,req_mem,preq_mem,lim_mem,plim_mem}}'  | column -s'|' -t
