@@ -836,7 +836,7 @@ oc -n knative-serving scale $(oc -n knative-serving get deployment -o name) --re
 oc get pods -n knative-serving | grep Pending | awk '{system("oc -n knative-serving delete pod " $1 )}'
 ```
 
-With these scaled down - we have some headroom - but you will need to scale operators back up for various tasks.
+With these scaled down - we have some headroom - but you will need to scale operators back up for various tasks. See [node-commit.sh](node-commit.sh)
 
 ```bash
 NODENAME                                   Allocatable CPU  Allocatable MEM  Request CPU  (%)    Limit CPU  (%)     Request MEM  (%)    Limit MEM  (%)
