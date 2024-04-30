@@ -256,6 +256,7 @@ Try out some performance enhancements for your SNO cluster.
 - Configuring crun as the default container runtime
 - 500 pods max
 - We want to set up custom LVM Configuration else we can get annoying PVID issues in RHEL9 when the SPOT instance reboots. [See here for details.](https://access.redhat.com/solutions/6889951#FN.1).
+- Disable CRIO wipe for SNO
 
 Run this post install, your SNO will reboot.
 
@@ -351,6 +352,23 @@ spec:
           mode: 420
           overwrite: true
           path: /etc/lvm/lvm.conf
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-crio-disable-wipe-master
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,W2NyaW9dCmNsZWFuX3NodXRkb3duX2ZpbGUgPSAiIgo=
+          mode: 420
+          path: /etc/crio/crio.conf.d/99-crio-disable-wipe.toml
 EOF
 ```
 
