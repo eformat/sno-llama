@@ -139,9 +139,9 @@ EOF
 watch oc get csv -A
 ```
 
-Make sure we have sno-lvm on the second attached disk only as spot conversion makes ami disk bigger so can get allocated to lvm unintentionally.
+Make sure we have sno-lvm on the second attached disk only using `deviceSelector` as spot conversion makes ami disk bigger so can get allocated to lvm unintentionally.
 
-Obtain disk-by-path for second disk `nvme2n1`
+Obtain disk-by-path for second disk `nvme1n1` (make sure not to select any instance volumes which do not survive stop/start e.g. nvme2n1 is not ebs in my setup)
 
 ```bash
 oc debug node/ip-10-0-83-218.us-east-2.compute.internal
@@ -161,14 +161,15 @@ spec:
  storage:
    deviceClasses:
      - name: vgsno
+       default: true
        thinPoolConfig:
          name: thin-pool-1
          overprovisionRatio: 10
          sizePercent: 90
+       fstype: xfs
        deviceSelector:
          paths:
-         - /dev/disk/by-path/pci-0000:33:00.0-nvme-1
-
+         - /dev/disk/by-path/pci-0000:23:00.0-nvme-1
 EOF
 
 oc annotate sc/lvms-vgsno storageclass.kubernetes.io/is-default-class=true
