@@ -143,7 +143,7 @@ HOST=https://sno-llama3-llama-serving.apps.sno.sandbox.opentlc.com
 # see which model is being served
 curl -k -X GET $HOST/v1/models -H 'accept: application/json'
 
-# try some example chat completions
+# try some example completions
 curl -s -k -X 'POST' \
   "$HOST/v1/completions" \
   -H 'accept: application/json' \
