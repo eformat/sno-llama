@@ -855,13 +855,16 @@ Make sure you give your notebook plenty of local storage (50-100GB).
 You can login as admin or admin2 and work on each notebook separately to see GPU timeslicing in action.
 
 #### llama2
-Open the [sno-llama2.ipynb](sno-llama2.ipynb) notebook and have a play. Use the llama2 Swagger UI for trying out chat completions.
+Open the [sno-llama2.ipynb](sno-llama2.ipynb) notebook and have a play.
 
 #### llama3
 Open the [sno-llama3.ipynb](sno-llama3.ipynb) notebook and have a play.
 
 #### granite
 Open the [sno-granite.ipynb](sno-granite.ipynb) notebook and have a play.
+
+#### code-llama
+Open the [sno-code-llama.ipynb](sno-code-llama.ipynb) notebook and have a play.
 
 
 ### Model Serving
