@@ -1,0 +1,63 @@
+{
+    "models": [
+      {
+        "title": "CodeLlama-7b",
+        "model": "CodeLlama-7b-Instruct-hf",
+        "apiBase": "https://sno-code-llama-llama-serving.apps.sno.sandbox.opentlc.com/v1/",
+        "completionOptions": {
+        "temperature": 0.1,
+        "topK": 1,
+        "topP": 1,
+        "presencePenalty": 0,
+        "frequencyPenalty": 0
+        },
+        "provider": "openai",
+        "apiKey": "none",
+        "requestOptions": {
+          "caBundlePath": "/opt/app-root/src/sno-llama/sno-code-llama.pem",
+          "verifySsl": true
+        }
+      }
+    ],
+    "customCommands": [
+      {
+        "name": "test",
+        "prompt": "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
+        "description": "Write unit tests for highlighted code"
+      }
+    ],
+    "tabAutocompleteModel": {
+        "title": "CodeLlama-7b",
+        "model": "codellama/CodeLlama-7b-Instruct-hf",
+        "apiBase": "https://sno-code-llama-llama-serving.apps.sno.sandbox.opentlc.com/v1/",
+        "completionOptions": {
+        "temperature": 0.1,
+        "topK": 1,
+        "topP": 1,
+        "presencePenalty": 0,
+        "frequencyPenalty": 0
+        },
+        "provider": "openai",
+        "apiKey": "none",
+        "requestOptions": {
+          "caBundlePath": "/opt/app-root/src/sno-llama/sno-code-llama.pem",
+          "verifySsl": true
+        }
+    },
+    "tabAutocompleteOptions": {
+        "useCopyBuffer": false,
+        "maxPromptTokens": 1024,
+        "prefixPercentage": 0.5
+    },
+    "allowAnonymousTelemetry": false,
+    "contextProviders": [
+      {
+        "name": "code",
+        "params": {}
+      },
+      {
+        "name": "docs",
+        "params": {}
+      }
+    ]
+  }

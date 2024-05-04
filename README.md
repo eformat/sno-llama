@@ -870,7 +870,7 @@ InstructLab's [opensource granite model.](https://huggingface.co/instructlab)
 Open the [sno-granite.ipynb](sno-granite.ipynb) notebook and have a play.
 
 #### code-llama
-Deploy your own [python coding assistant](https://ai-on-openshift.io/demos/codellama-continue/codellama-continue)
+Deploy your own [IDE python coding assistant.](continue/README.md)
 
 Open the [sno-code-llama.ipynb](sno-code-llama.ipynb) notebook and have a play.
 
