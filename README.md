@@ -855,15 +855,23 @@ Make sure you give your notebook plenty of local storage (50-100GB).
 You can login as admin or admin2 and work on each notebook separately to see GPU timeslicing in action.
 
 #### llama2
+Meta's [llama-2 model.](https://llama.meta.com/llama2)
+
 Open the [sno-llama2.ipynb](sno-llama2.ipynb) notebook and have a play.
 
 #### llama3
+Meta's [llama-3 model.](https://llama.meta.com/llama3)
+
 Open the [sno-llama3.ipynb](sno-llama3.ipynb) notebook and have a play.
 
 #### granite
+InstructLab's [opensource granite model.](https://huggingface.co/instructlab)
+
 Open the [sno-granite.ipynb](sno-granite.ipynb) notebook and have a play.
 
 #### code-llama
+Deploy your own [python coding assistant](https://ai-on-openshift.io/demos/codellama-continue/codellama-continue)
+
 Open the [sno-code-llama.ipynb](sno-code-llama.ipynb) notebook and have a play.
 
 
