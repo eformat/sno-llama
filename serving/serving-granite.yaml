@@ -23,7 +23,7 @@ spec:
     - name: MODELLOCATION
       value: /mnt/models
     - name: CHAT_FORMAT
-      value: ""
+      value: "--chat_format llama-2"
     image: image-registry.openshift-image-registry.svc:5000/openshift/llama-serving
     name: kserve-container
     ports:
