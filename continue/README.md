@@ -11,3 +11,10 @@ oc apply serving/serving-code-llama.yaml
 ```
 
 Configure your IDE - vscode in this [config.json](config.json) example.
+
+If self-signed certificates give you an error, try this hack when starting your code-server notebook:
+
+```bash
+# turn off all ssl verify
+NODE_TLS_REJECT_UNAUTHORIZED = 0
+```
