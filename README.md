@@ -874,6 +874,11 @@ Deploy your own [IDE python coding assistant.](continue/README.md)
 
 Open the [sno-code-llama.ipynb](sno-code-llama.ipynb) notebook and have a play.
 
+#### prompt caching
+How can we start to remeber previous chat contexts using llama.cpp
+
+Open the [sno-prompt-cache.ipynb](sno-prompt-cache.ipynb) notebook and have a play.
+
 
 ### Model Serving
 
