@@ -854,31 +854,36 @@ Make sure you give your notebook plenty of local storage (50-100GB).
 
 You can login as admin or admin2 and work on each notebook separately to see GPU timeslicing in action.
 
-#### llama2
+#### Llama2
 Meta's [llama-2 model.](https://llama.meta.com/llama2)
 
 Open the [sno-llama2.ipynb](sno-llama2.ipynb) notebook and have a play.
 
-#### llama3
+#### Llama3
 Meta's [llama-3 model.](https://llama.meta.com/llama3)
 
 Open the [sno-llama3.ipynb](sno-llama3.ipynb) notebook and have a play.
 
-#### granite
+#### Granite
 InstructLab's [opensource granite model.](https://huggingface.co/instructlab)
 
 Open the [sno-granite.ipynb](sno-granite.ipynb) notebook and have a play.
 
-#### code-llama
+#### Code-Llama
 Deploy your own [IDE python coding assistant.](continue/README.md)
 
 Open the [sno-code-llama.ipynb](sno-code-llama.ipynb) notebook and have a play.
 
-#### prompt caching
+#### Prompt Caching
 How can we start to remeber previous chat contexts using llama.cpp
 
 Open the [sno-prompt-cache.ipynb](sno-prompt-cache.ipynb) notebook and have a play.
 
+#### Instructlab
+
+Use RHOAI try out [instructlab](https://github.com/instructlab/instructlab) using a notebook image. See [Instructlab README.md](instructlab/README.md)
+
+Open the [sno-instructlab.ipynb](sno-instructlab.ipynb) notebook and have a play.
 
 ### Model Serving
 
