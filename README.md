@@ -763,7 +763,7 @@ spec:
     resources:
       requests:
         cpu: "4"
-        memory: 8Gi
+        memory: 10Gi
   - name: Large
     resources:
       requests:
