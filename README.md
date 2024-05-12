@@ -763,7 +763,7 @@ spec:
     resources:
       requests:
         cpu: "4"
-        memory: 10Gi
+        memory: 8Gi
   - name: Large
     resources:
       requests:
@@ -781,7 +781,7 @@ spec:
     resources:
       requests:
         cpu: "1"
-        memory: 8Gi
+        memory: 10Gi
   - name: Medium
     resources:
       requests:
