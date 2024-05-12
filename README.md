@@ -775,7 +775,7 @@ spec:
     notebookTolerationSettings:
       enabled: false
       key: NotebooksOnly
-    pvcSize: 50Gi
+    pvcSize: 100Gi
   notebookSizes:
   - name: Small
     resources:
