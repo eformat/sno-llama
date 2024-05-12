@@ -781,7 +781,7 @@ spec:
     resources:
       requests:
         cpu: "1"
-        memory: 10Gi
+        memory: 8Gi
   - name: Medium
     resources:
       requests:
