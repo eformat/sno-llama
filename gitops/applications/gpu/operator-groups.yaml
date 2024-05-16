@@ -1,0 +1,22 @@
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: NodeFeatureDiscovery.v1.nfd.openshift.io,NodeFeatureRule.v1alpha1.nfd.openshift.io,NodeResourceTopology.v1alpha1.topology.node.k8s.io,NodeResourceTopology.v1alpha2.topology.node.k8s.io
+  generateName: openshift-nfd-
+  name: openshift-nfd-og
+  namespace: openshift-nfd
+spec:
+  targetNamespaces:
+  - openshift-nfd
+  upgradeStrategy: Default
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: nvidia-gpu-operator-group
+  namespace: nvidia-gpu-operator
+spec:
+ targetNamespaces:
+ - nvidia-gpu-operator

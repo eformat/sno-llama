@@ -174,6 +174,23 @@ app_of_apps() {
     echo "🌴 app_of_apps ran OK"
 }
 
+gpu_config() {
+    if [ -z "$DRYRUN" ]; then
+        echo -e "${GREEN}Ignoring - gpu_config - dry run set${NC}"
+        return
+    fi
+
+    oc patch clusterpolicies.nvidia.com/gpu-cluster-policy \
+        -n nvidia-gpu-operator --type merge \
+        -p '{"spec": {"devicePlugin": {"config": {"name": "time-slicing-config"}}}}'
+
+    oc label node \
+        --selector=nvidia.com/gpu.product=NVIDIA-L4 \
+        nvidia.com/device-plugin.config=nvidia-l4
+
+    echo "🌴 gpu_config ran OK"
+}
+
 usage() {
   cat <<EOF 2>&1
 usage: $0 [ -d ]
