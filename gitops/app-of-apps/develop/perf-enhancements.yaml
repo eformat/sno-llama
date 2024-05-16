@@ -13,8 +13,6 @@ spec:
     repoURL: https://github.com/eformat/sno-llama.git
     path: gitops/applications/perf-enhancements
     targetRevision: main
-    plugin:
-      name: argocd-vault-plugin
   syncPolicy:
     automated:
       prune: true
