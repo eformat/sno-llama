@@ -89,6 +89,8 @@ app_of_apps() {
     echo -e "${GREEN}Sleeping for a bit for MachineConfig to be applied...${NC}"
     sleep 30
     wait_for_openshift_api
+
+    echo "🌴 app_of_apps ran OK"
 }
 
 usage() {
@@ -124,7 +126,7 @@ all() {
     echo "🌴 KUBECONFIG set to $KUBECONFIG"
 
     boostrap
-
+    app_of_apps
 }
 
 while getopts db:c:k: opts; do

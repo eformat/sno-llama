@@ -5,7 +5,7 @@ metadata:
   name: develop-app-of-apps
   namespace: openshift-gitops
   labels:
-    rht-gitops.com/open-cluster-management-global-set: policies
+    rht-gitops.com/openshift-gitops: policies
 spec:
   destination:
     namespace: openshift-gitops
@@ -15,7 +15,7 @@ spec:
     path: app-of-apps/develop
     directory:
       include: "*.yaml"
-    repoURL: repoURL: https://github.com/eformat/sno-llama.git
+    repoURL: https://github.com/eformat/sno-llama.git
     targetRevision: main
   syncPolicy:
     automated:
