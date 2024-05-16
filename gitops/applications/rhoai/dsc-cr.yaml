@@ -14,11 +14,6 @@ spec:
       managementState: Managed
     kserve:
       managementState: Managed
-      serving:
-      ingressGateway:
-        certificate:
-          type: SelfSigned
-      name: knative-serving
     kueue:
       managementState: Managed
     modelmeshserving:
