@@ -1,0 +1,8 @@
+---
+resources:
+  - namespace.yaml
+  - operator-group.yaml
+  - subscription.yaml
+  - lvm-cluster.yaml
+  - storage-cluster.yaml
+  - storage-system.yaml

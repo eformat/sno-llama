@@ -112,6 +112,36 @@ setup_extra_storage() {
     fi
 }
 
+storage_class() {
+    if [ -z "$DRYRUN" ]; then
+        echo -e "${GREEN}Ignoring - storage_class - dry run set${NC}"
+        return
+    fi
+
+    echo "🌴 Running storage_class..."
+
+    local i=0
+    oc get sc/lvms-vgsno
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
+        ((i=i+1))
+        if [ $i -gt 100 ]; then
+            echo -e "🕱${RED}Failed - oc never ready?.${NC}"
+            exit 1
+        fi
+        sleep 5
+        oc get sc/lvms-vgsno
+    done
+    oc annotate sc/lvms-vgsno storageclass.kubernetes.io/is-default-class=true
+    oc annotate sc/gp3-csi storageclass.kubernetes.io/is-default-class-
+    if [ "$?" != 0 ]; then
+        echo -e "🕱${RED}Failed to annotate sc ?${NC}"
+        exit 1
+    fi
+    echo "🌴 storage_class ran OK"
+}
+
 wait_for_openshift_api() {
     local i=0
     HOST=https://api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443/healthz
@@ -179,6 +209,7 @@ all() {
     boostrap
     setup_extra_storage
     app_of_apps
+    storage_class
 }
 
 while getopts db:c:k: opts; do

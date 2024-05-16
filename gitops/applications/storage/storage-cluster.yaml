@@ -1,0 +1,27 @@
+---
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  name: ocs-storagecluster
+  namespace: openshift-storage
+spec:
+  multiCloudGateway:
+    dbStorageClassName: lvms-vgsno
+    endpoints:
+      maxCount: 1
+      minCount: 1
+    reconcileStrategy: standalone
+  resourceProfile: balanced
+  resources:
+    noobaa-core:
+      requests:
+        cpu: 500m
+        memory: 4Gi
+    noobaa-db:
+      requests:
+        cpu: 500m
+        memory: 4Gi
+    noobaa-endpoint:
+      requests:
+        cpu: 500m
+        memory: 4Gi
