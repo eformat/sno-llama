@@ -1,0 +1,19 @@
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-lvm-conf
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+        - contents:
+            compression: gzip
+            source: data:;base64,H4sIAAAAAAAC/zyNQarDMAwF9z6F8Pob/gVyklKMoiqxiWqltpNNyN2LQujuMUIzpGXKMxyne/GeiRscDgBgaxxvMmVhGOD/4o2xUoqTVjsXfHODATyKeHc6FFHCnrWYUfQSj0jLttpqiUVszKIjyp3qKZdIiWmJutqvGR/gw8f/gQ8Bt66h8oq5enhahXref5VvAAAA///jFypswgAAAA==
+          mode: 420
+          overwrite: true
+          path: /etc/lvm/lvm.conf

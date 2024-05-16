@@ -1,0 +1,4 @@
+---
+resources:
+  - setup-cr.yaml
+  - setup-subs.yaml

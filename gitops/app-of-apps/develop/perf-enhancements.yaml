@@ -1,0 +1,23 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: perf-enhancements
+  namespace: open-cluster-management-global-set
+spec:
+  destination:
+    namespace: open-cluster-management-global-set
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    repoURL: https://github.com/eformat/sno-llama.git
+    path: applications/perf-enhancements
+    targetRevision: main
+    plugin:
+      name: argocd-vault-plugin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Validate=true

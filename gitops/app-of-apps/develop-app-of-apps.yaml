@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: develop-app-of-apps
+  namespace: openshift-gitops
+  labels:
+    rht-gitops.com/open-cluster-management-global-set: policies
+spec:
+  destination:
+    namespace: openshift-gitops
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: app-of-apps/develop
+    directory:
+      include: "*.yaml"
+    repoURL: repoURL: https://github.com/eformat/sno-llama.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - Validate=true
