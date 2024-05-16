@@ -66,6 +66,51 @@ boostrap() {
     wait_for_argocd
 }
 
+setup_extra_storage() {
+    if [ -z "$DRYRUN" ]; then
+        echo -e "${GREEN}Ignoring - setup_extra_storage - dry run set${NC}"
+        return
+    fi
+
+    echo "🌴 Running setup_extra_storage..."
+
+    if [[ $(aws ec2 describe-volumes --region=${AWS_DEFAULT_REGION} \
+              --filters=Name=attachment.instance-id,Values=${INSTANCE_ID} \
+              --query "Volumes[*].{VolumeID:Attachments[0].VolumeId,InstanceID:Attachments[0].InstanceId,State:Attachments[0].State,Environment:Tags[?Key=='Environment']|[0].Value}" \
+              | jq length) > 1 ]]; then 
+         echo -e "💀${ORANGE} More than 1 volume attachment found, assuming this step been done previously, returning? ${NC}";
+         return
+    fi
+
+    export INSTANCE_ID=$(aws ec2 describe-instances \
+    --query "Reservations[].Instances[].InstanceId" \
+    --filters "Name=tag-value,Values=$CLUSTER_NAME-*-master-0" "Name=instance-state-name,Values=running" \
+    --output text)
+
+    export AWS_ZONE=$(aws ec2 describe-instances \
+    --query "Reservations[].Instances[].Placement.AvailabilityZone" \
+    --filters "Name=tag-value,Values=$CLUSTER_NAME-*-master-0" "Name=instance-state-name,Values=running" \
+    --output text)
+
+    vol=$(aws ec2 create-volume \
+    --availability-zone ${AWS_ZONE} \
+    --volume-type gp3 \
+    --size 200 \
+    --region=${AWS_DEFAULT_REGION})
+
+    aws ec2 attach-volume \
+    --volume-id $(echo ${vol} | jq -r '.VolumeId') \
+    --instance-id ${INSTANCE_ID} \
+    --device /dev/sdf
+
+    if [ "$?" != 0 ]; then
+      echo -e "🚨${RED}Failed - to run setup_extra_storage ?${NC}"
+      exit 1
+    else
+      echo "🌴 setup_extra_storage ran OK"
+    fi
+}
+
 wait_for_openshift_api() {
     local i=0
     HOST=https://api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443/healthz
@@ -82,6 +127,11 @@ wait_for_openshift_api() {
 }
 
 app_of_apps() {
+    if [ -z "$DRYRUN" ]; then
+        echo -e "${GREEN}Ignoring - app_of_apps - dry run set${NC}"
+        return
+    fi
+
     echo "🌴 Running app_of_apps..."
 
     oc apply -f gitops/app-of-apps/develop-app-of-apps.yaml
@@ -126,6 +176,7 @@ all() {
     echo "🌴 KUBECONFIG set to $KUBECONFIG"
 
     boostrap
+    setup_extra_storage
     app_of_apps
 }
 
