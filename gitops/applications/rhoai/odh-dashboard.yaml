@@ -1,0 +1,82 @@
+---
+apiVersion: opendatahub.io/v1alpha
+kind: OdhDashboardConfig
+metadata:
+  annotations:
+    internal.config.kubernetes.io/previousKinds: OdhDashboardConfig
+    internal.config.kubernetes.io/previousNames: odh-dashboard-config
+    internal.config.kubernetes.io/previousNamespaces: default
+  labels:
+    app.kubernetes.io/part-of: rhods-dashboard
+    app.opendatahub.io/rhods-dashboard: "true"
+  name: odh-dashboard-config
+  namespace: redhat-ods-applications
+spec:
+  dashboardConfig:
+    disableAcceleratorProfiles: false
+    disableBYONImageStream: false
+    disableBiasMetrics: false
+    disableClusterManager: false
+    disableCustomServingRuntimes: false
+    disableDistributedWorkloads: true
+    disableISVBadges: false
+    disableInfo: false
+    disableKServe: false
+    disableModelMesh: false
+    disableModelServing: false
+    disablePerformanceMetrics: false
+    disablePipelines: false
+    disableProjectSharing: false
+    disableProjects: false
+    disableSupport: false
+    disableTracking: false
+    enablement: true
+  groupsConfig:
+    adminGroups: rhods-admins
+    allowedGroups: system:authenticated
+  modelServerSizes:
+  - name: Small
+    resources:
+      requests:
+        cpu: "1"
+        memory: 4Gi
+  - name: Medium
+    resources:
+      requests:
+        cpu: "4"
+        memory: 8Gi
+  - name: Large
+    resources:
+      requests:
+        cpu: "6"
+        memory: 16Gi
+  notebookController:
+    enabled: true
+    notebookNamespace: rhods-notebooks
+    notebookTolerationSettings:
+      enabled: false
+      key: NotebooksOnly
+    pvcSize: 100Gi
+  notebookSizes:
+  - name: Small
+    resources:
+      requests:
+        cpu: "1"
+        memory: 8Gi
+  - name: Medium
+    resources:
+      requests:
+        cpu: "3"
+        memory: 24Gi
+  - name: Large
+    resources:
+      requests:
+        cpu: "7"
+        memory: 56Gi
+  - name: X Large
+    resources:
+      requests:
+        cpu: "15"
+        memory: 120Gi
+  templateDisablement: []
+  templateOrder: []
