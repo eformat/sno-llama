@@ -10,6 +10,7 @@ DRYRUN=${DRYRUN:-}
 BASE_DOMAIN=${BASE_DOMAIN:-}
 CLUSTER_NAME=${CLUSTER_NAME:-}
 GITOPS_OPERATOR_VERSION=1.12.2
+EXTRA_DISK_SIZE=${EXTRA_DISK_SIZE:-200}
 
 wait_for_gitops_csv() {
     local i=0
@@ -95,7 +96,7 @@ setup_extra_storage() {
     vol=$(aws ec2 create-volume \
     --availability-zone ${AWS_ZONE} \
     --volume-type gp3 \
-    --size 200 \
+    --size ${EXTRA_DISK_SIZE} \
     --region=${AWS_DEFAULT_REGION})
 
     aws ec2 attach-volume \
