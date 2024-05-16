@@ -18,7 +18,6 @@ spec:
       ingressGateway:
         certificate:
           type: SelfSigned
-      managementState: Managed
       name: knative-serving
     kueue:
       managementState: Managed
@@ -28,9 +27,9 @@ spec:
       managementState: Managed
     ray:
       managementState: Managed
-    #trainingoperator:
-    #  managementState: Managed
-    #trustyai:
-    #  managementState: Managed
+    # trainingoperator:
+    #   managementState: Managed
+    # trustyai:
+    #   managementState: Managed
     workbenches:
       managementState: Managed
