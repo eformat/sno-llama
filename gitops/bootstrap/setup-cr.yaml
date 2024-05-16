@@ -69,7 +69,7 @@ data:
         args: ["helm dependency build"]
       generate:
         command: ["bash", "-c"]
-        args: ['helm template "$ARGOCD_APP_NAME" -n "$ARGOCD_APP_NAMESPACE" -f <(echo "$ARGOCD_ENV_HELM_VALUES") . | argocd-vault-plugin generate -s open-cluster-management-global-set:team-avp-credentials -']
+        args: ['helm template "$ARGOCD_APP_NAME" -n "$ARGOCD_APP_NAMESPACE" -f <(echo "$ARGOCD_ENV_HELM_VALUES") . | argocd-vault-plugin generate -s openshift-gitops:team-avp-credentials -']
   kustomize-plugin.yaml: |
     apiVersion: argoproj.io/v1alpha1
     kind: ConfigManagementPlugin
@@ -78,7 +78,7 @@ data:
     spec:
       generate:
         command: ["sh", "-c"]
-        args: ["kustomize --enable-alpha-plugins --enable-helm build . | argocd-vault-plugin -s open-cluster-management-global-set:team-avp-credentials generate -"]
+        args: ["kustomize --enable-alpha-plugins --enable-helm build . | argocd-vault-plugin -s openshift-gitops:team-avp-credentials generate -"]
   vault-plugin.yaml: |
     apiVersion: argoproj.io/v1alpha1
     kind: ConfigManagementPlugin
@@ -87,7 +87,7 @@ data:
     spec:
       generate:
         command: ["sh", "-c"]
-        args: ["argocd-vault-plugin -s open-cluster-management-global-set:team-avp-credentials generate ./"]
+        args: ["argocd-vault-plugin -s openshift-gitops:team-avp-credentials generate ./"]
 ---
 apiVersion: argoproj.io/v1beta1
 kind: ArgoCD
