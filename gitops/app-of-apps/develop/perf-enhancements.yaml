@@ -3,15 +3,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: perf-enhancements
-  namespace: open-cluster-management-global-set
+  namespace: openshift-gitops
 spec:
   destination:
-    namespace: open-cluster-management-global-set
+    namespace: openshift-gitops
     server: 'https://kubernetes.default.svc'
   project: default
   source:
     repoURL: https://github.com/eformat/sno-llama.git
-    path: applications/perf-enhancements
+    path: gitops/applications/perf-enhancements
     targetRevision: main
     plugin:
       name: argocd-vault-plugin
