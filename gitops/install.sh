@@ -174,11 +174,29 @@ app_of_apps() {
     echo "🌴 app_of_apps ran OK"
 }
 
+wait_for_gpu_cluster_policy() {
+    local i=0
+    STATUS=$(oc get clusterpolicies.nvidia.com gpu-cluster-policy -n openshift-operators -o jsonpath='{.status.state}')
+    until [ "$STATUS" == "ready" ]
+    do
+        echo -e "${GREEN}Waiting for clusterpolicies.nvidia.com to install.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 200 ]; then
+            echo -e "🚨${RED}Failed waiting for clusterpolicies.nvidia.com never Succeeded?.${NC}"
+            exit 1
+        fi
+        STATUS=$(oc get clusterpolicies.nvidia.com gpu-cluster-policy -n openshift-operators -o jsonpath='{.status.state}')
+    done
+}
+
 gpu_config() {
     if [ -z "$DRYRUN" ]; then
         echo -e "${GREEN}Ignoring - gpu_config - dry run set${NC}"
         return
     fi
+
+    wait_for_gpu_cluster_policy
 
     oc patch clusterpolicies.nvidia.com/gpu-cluster-policy \
         -n nvidia-gpu-operator --type merge \
@@ -186,7 +204,8 @@ gpu_config() {
 
     oc label node \
         --selector=nvidia.com/gpu.product=NVIDIA-L4 \
-        nvidia.com/device-plugin.config=nvidia-l4
+        nvidia.com/device-plugin.config=nvidia-l4 \
+        --overwrite
 
     echo "🌴 gpu_config ran OK"
 }
@@ -227,6 +246,7 @@ all() {
     setup_extra_storage
     app_of_apps
     storage_class
+    gpu_config
 }
 
 while getopts db:c:k: opts; do
