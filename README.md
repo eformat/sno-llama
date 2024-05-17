@@ -570,7 +570,7 @@ oc get events -n nvidia-gpu-operator --sort-by='.lastTimestamp'
 oc describe node | sed '/Capacity/,/System/!d;/System/d'
 ```
 
-Deploy Service Mesh, Serverless pre-requisites for Kserve.
+Deploy Service Mesh, Serverless, Pipelines pre-requisites for Kserve + Datascience Pipelines 2.0
 
 ```bash
 cat <<EOF | oc create -f -
@@ -604,36 +604,27 @@ spec:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
 EOF
-```
 
-```bash
-watch oc -n openshift-operators get csv
-```
-
-
-Configure the RHOAI Data Science Pipelines operator v2.
-
-```bash
-WORKING_DIR=$(mktemp -d)
-git clone https://github.com/opendatahub-io/data-science-pipelines-operator.git ${WORKING_DIR}
-```
-
-```bash
-export ODH_NS=redhat-ods-operator
 cat <<EOF | oc create -f -
-apiVersion: v1
-kind: Namespace
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
 metadata:
-  name: ${ODH_NS}
+  generation: 1
   labels:
-    openshift.io/cluster-monitoring: "true"
+    operators.coreos.com/openshift-pipelines-operator-rh.openshift-operators: ""
+  name: openshift-pipelines-operator-rh
+  namespace: openshift-operators
+spec:
+  channel: latest
+  installPlanApproval: Automatic
+  name: openshift-pipelines-operator-rh
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
 EOF
 ```
 
 ```bash
-cd ${WORKING_DIR}
-make deploy OPERATOR_NS=${ODH_NS}
-oc get pods -n ${ODH_NS}
+watch oc -n openshift-operators get csv
 ```
 
 Configure the RHOAI Operator.
