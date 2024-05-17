@@ -1,4 +1,5 @@
-FROM quay.io/modh/odh-pytorch-notebook@sha256:c812c544eceeec994b04bd4f1cba8dc38e15a88637a06556a21ed26f808c4b4a
+# 2024.1
+FROM quay.io/modh/odh-pytorch-notebook@sha256:604c8c92a0751fe6573912f8689366855d3e7d28698eade4d7875f9afc9a2276
 
 USER 0
 WORKDIR /opt

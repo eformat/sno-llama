@@ -8,7 +8,7 @@ Start the build in OpenShift.
 
 ```bash
 oc -n openshift new-build \
-  --strategy docker --dockerfile - --name llama-serving < serving/Dockerfile 
+  --strategy docker --dockerfile - --name llama-serving < serving/Dockerfile
 ```
 
 Monitor the build.

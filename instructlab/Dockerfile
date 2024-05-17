@@ -1,4 +1,5 @@
-FROM quay.io/modh/cuda-notebooks@sha256:12485b71290f761bff93843e14c40771dab3bb04e956a8a98b69e4b573c5f8ee
+# 2024.1
+FROM quay.io/modh/cuda-notebooks@sha256:0bcc4f25f212c93915e7efa80cd4a26ceb29151b33ac217e8b48a0184e42b588
 USER root
 RUN dnf -y install https://rpmfind.net/linux/epel/9/Everything/x86_64/Packages/n/nvtop-3.0.2-1.el9.x86_64.rpm
 RUN pip install --upgrade pip
