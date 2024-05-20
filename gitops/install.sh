@@ -32,7 +32,7 @@ wait_for_argocd() {
     local i=0
     ARGOCD_URL=https://$(oc -n openshift-gitops get route global-policy-server -o custom-columns=ROUTE:.spec.host --no-headers)
     HOST=${ARGOCD_URL}/healthz
-    until [ $(curl -s -o /dev/null -w %{http_code} ${HOST}) = "200" ]
+    until [ $(curl -k -s -o /dev/null -w %{http_code} ${HOST}) = "200" ]
     do
         echo "🌴 Waiting for 200 response from ${HOST}"
         sleep 10
