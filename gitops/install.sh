@@ -211,10 +211,6 @@ gpu_config() {
 
     wait_for_gpu_cluster_policy
 
-    oc patch clusterpolicies.nvidia.com/gpu-cluster-policy \
-        -n nvidia-gpu-operator --type merge \
-        -p '{"spec": {"devicePlugin": {"config": {"name": "time-slicing-config"}}}}'
-
     oc label node \
         --selector=nvidia.com/gpu.product=NVIDIA-L4 \
         nvidia.com/device-plugin.config=nvidia-l4 \

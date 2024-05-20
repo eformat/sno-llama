@@ -59,7 +59,7 @@ spec:
   devicePlugin:
     enabled: true
     config:
-      name: ""
+      name: "time-slicing-config"
       default: ""
   gfd:
     enabled: true
