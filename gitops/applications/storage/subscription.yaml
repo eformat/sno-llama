@@ -14,3 +14,17 @@ spec:
   name: lvms-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: odf-operator
+  namespace: openshift-storage
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  channel: stable-4.15
+  installPlanApproval: Automatic
+  name: odf-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
