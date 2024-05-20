@@ -168,7 +168,7 @@ app_of_apps() {
     oc apply -f gitops/app-of-apps/develop-app-of-apps.yaml
 
     echo -e "${GREEN}Sleeping for a bit for MachineConfig to be applied...${NC}"
-    sleep 30
+    sleep 60
     wait_for_openshift_api
 
     echo "🌴 app_of_apps ran OK"
