@@ -6,6 +6,8 @@ metadata:
   - foreground-deletion
   name: nfd-instance
   namespace: openshift-nfd
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   instance: ""
   operand:

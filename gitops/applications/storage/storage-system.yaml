@@ -4,6 +4,8 @@ kind: StorageSystem
 metadata:
   name: ocs-storagecluster-storagesystem
   namespace: openshift-storage
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   kind: storagecluster.ocs.openshift.io/v1
   name: ocs-storagecluster

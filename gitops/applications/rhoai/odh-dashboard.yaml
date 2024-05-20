@@ -6,6 +6,7 @@ metadata:
     internal.config.kubernetes.io/previousKinds: OdhDashboardConfig
     internal.config.kubernetes.io/previousNames: odh-dashboard-config
     internal.config.kubernetes.io/previousNamespaces: default
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels:
     app.kubernetes.io/part-of: rhods-dashboard
     app.opendatahub.io/rhods-dashboard: "true"

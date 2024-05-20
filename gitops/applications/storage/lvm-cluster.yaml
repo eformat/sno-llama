@@ -4,6 +4,8 @@ kind: LVMCluster
 metadata:
  name: sno-lvm
  namespace: openshift-storage
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
  storage:
    deviceClasses:

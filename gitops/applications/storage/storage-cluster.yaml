@@ -4,6 +4,8 @@ kind: StorageCluster
 metadata:
   name: ocs-storagecluster
   namespace: openshift-storage
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   multiCloudGateway:
     dbStorageClassName: lvms-vgsno
