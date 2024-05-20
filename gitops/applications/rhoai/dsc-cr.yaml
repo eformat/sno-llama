@@ -6,6 +6,7 @@ metadata:
   namespace: redhat-ods-operator
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   components:
     codeflare:

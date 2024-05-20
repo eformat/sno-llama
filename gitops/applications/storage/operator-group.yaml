@@ -4,6 +4,8 @@ kind: OperatorGroup
 metadata:
   name: operator-storage
   namespace: openshift-storage
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   targetNamespaces:
   - openshift-storage
