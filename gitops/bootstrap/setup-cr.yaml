@@ -140,7 +140,7 @@ spec:
       route:
         enabled: false
   rbac:
-    defaultPolicy: ""
+    defaultPolicy: "role:readonly"
     policy: |
       g, admin, role:admin
     scopes: '[groups]'
