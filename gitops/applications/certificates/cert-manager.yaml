@@ -7,6 +7,9 @@ metadata:
   - cert-manager-operator.operator.openshift.io/cert-manager-controller-deployment
   - cert-manager-operator.operator.openshift.io/cert-manager-cainjector-deployment
   name: cluster
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   logLevel: Normal
   managementState: Managed

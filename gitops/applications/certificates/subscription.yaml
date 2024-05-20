@@ -4,6 +4,8 @@ kind: Subscription
 metadata:
   name: openshift-cert-manager-operator
   namespace: cert-manager-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: stable-v1
   name: openshift-cert-manager-operator
