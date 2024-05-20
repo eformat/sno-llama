@@ -260,6 +260,14 @@ all() {
     patch_ingress
 }
 
+progress() {
+    cat <<EOF 2>&1
+🌻 Track progress using: 🌻
+
+  watch oc get co
+EOF
+}
+
 # Check for EnvVars
 [ -z "$EMAIL" ] && echo "🕱 Error: must supply EMAIL in env or cli" && exit 1
 [ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env or cli" && exit 1
@@ -274,3 +282,7 @@ LE_WILDCARD=$(oc get ingresscontroller default -n openshift-ingress-operator -o 
 [ -z "$LE_WILDCARD" ] && echo "🕱 Error: LE_WILDCARD could not set" && exit
 
 all
+
+progress
+echo -e "\n🌻${GREEN}Certificates configured OK.${NC}🌻\n"
+exit 0
