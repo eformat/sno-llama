@@ -5,3 +5,4 @@ resources:
   - subscriptions.yaml
   - nfd-cr.yaml
   - configmap.yaml
+  - gpu-cluster-policy.yaml

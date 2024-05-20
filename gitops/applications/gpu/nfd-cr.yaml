@@ -3,6 +3,9 @@ kind: NodeFeatureDiscovery
 metadata:
   name: nfd-instance
   namespace: openshift-nfd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   operand:
     image: 'registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9@sha256:39a639fc93166e9e14c44dadf04adfb419f98a832b690e8b7bb301da68b5a2f3'
