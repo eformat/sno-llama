@@ -242,6 +242,7 @@ all() {
     echo "🌴 CLUSTER_NAME set to $CLUSTER_NAME"
     echo "🌴 KUBECONFIG set to $KUBECONFIG"
 
+    wait_for_openshift_api
     boostrap
     setup_extra_storage
     app_of_apps
