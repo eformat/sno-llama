@@ -157,6 +157,21 @@ wait_for_openshift_api() {
     done
 }
 
+wait_for_machine_config() {
+    local i=0
+    oc get mc 99-kubens-master 2>&1>/dev/null
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for MachineConfig to be applied.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 300 ]; then
+            echo -e "🕱${RED}Failed - MachineConfig 99-kubens-master never found?.${NC}"
+            exit 1
+        fi
+    done
+}
+
 app_of_apps() {
     if [ -z "$DRYRUN" ]; then
         echo -e "${GREEN}Ignoring - app_of_apps - dry run set${NC}"
@@ -167,9 +182,7 @@ app_of_apps() {
 
     oc apply -f gitops/app-of-apps/develop-app-of-apps.yaml
 
-    echo -e "${GREEN}Sleeping for a bit for MachineConfig to be applied...${NC}"
-    sleep 60
-    wait_for_openshift_api
+    wait_for_machine_config
 
     echo "🌴 app_of_apps ran OK"
 }
