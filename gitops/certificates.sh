@@ -14,6 +14,42 @@ get_hosted_zone() {
     echo -e "${GREEN} Hosted Zone ${BASE_DOMAIN}. set to ${HOSTED_ZONE}${NC}"
 }
 
+create_caa_route53() {
+    echo "🌴 Running create_caa_route53..."
+
+aws route53 change-resource-record-sets \
+--region ${AWS_DEFAULT_REGION} \
+--hosted-zone-id $(echo ${HOSTED_ZONE} | sed 's/\/hostedzone\///g' | tr -d '"') \
+--change-batch file://<(cat << EOF
+{
+  "Comment": "Upsert CAA",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "caa.${BASE_DOMAIN}.",
+        "Type": "CAA",
+        "TTL": 300,
+        "ResourceRecords": [
+            {
+              "Value": "0 issuewild \"letsencrypt.org;\""
+            }
+        ]
+      }
+    }
+  ]
+}
+EOF
+)
+
+    if [ "$?" != 0 ]; then
+      echo -e "🚨${RED}Failed - to run create_caa_route53 ?${NC}"
+      exit 1
+    else
+      echo "🌴 create_caa_route53 ran OK"
+    fi
+}
+
 create_aws_secrets() {
     echo "🌴 Running create_aws_secrets..."
     oc -n openshift-config create secret generic aws-secret --from-literal=awsSecretAccessKey=${AWS_SECRET_ACCESS_KEY} 2>&1 | tee /tmp/oc-error-file
@@ -247,6 +283,7 @@ all() {
 
     create_aws_secrets
     get_hosted_zone
+    create_caa_route53
 
     create_issuers
     wait_for_api_issuer
