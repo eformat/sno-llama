@@ -4,6 +4,8 @@ kind: Subscription
 metadata:
   name: nfd
   namespace: openshift-nfd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: stable
   installPlanApproval: Automatic
@@ -16,6 +18,8 @@ kind: Subscription
 metadata:
   name: gpu-operator-certified
   namespace: nvidia-gpu-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: "v23.9"
   installPlanApproval: Automatic
