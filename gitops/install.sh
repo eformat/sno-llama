@@ -52,7 +52,7 @@ boostrap() {
     fi
 
     echo "🌴 Running bootstrap ..."
-    
+
     oc apply -k gitops/bootstrap
     wait_for_gitops_csv
     oc apply -k gitops/bootstrap
