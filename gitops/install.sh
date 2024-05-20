@@ -75,6 +75,11 @@ setup_extra_storage() {
 
     echo "🌴 Running setup_extra_storage..."
 
+    export INSTANCE_ID=$(aws ec2 describe-instances \
+    --query "Reservations[].Instances[].InstanceId" \
+    --filters "Name=tag-value,Values=$CLUSTER_NAME-*-master-0" "Name=instance-state-name,Values=running" \
+    --output text)
+
     if [[ $(aws ec2 describe-volumes --region=${AWS_DEFAULT_REGION} \
               --filters=Name=attachment.instance-id,Values=${INSTANCE_ID} \
               --query "Volumes[*].{VolumeID:Attachments[0].VolumeId,InstanceID:Attachments[0].InstanceId,State:Attachments[0].State,Environment:Tags[?Key=='Environment']|[0].Value}" \
@@ -82,11 +87,6 @@ setup_extra_storage() {
          echo -e "💀${ORANGE} More than 1 volume attachment found, assuming this step been done previously, returning? ${NC}";
          return
     fi
-
-    export INSTANCE_ID=$(aws ec2 describe-instances \
-    --query "Reservations[].Instances[].InstanceId" \
-    --filters "Name=tag-value,Values=$CLUSTER_NAME-*-master-0" "Name=instance-state-name,Values=running" \
-    --output text)
 
     export AWS_ZONE=$(aws ec2 describe-instances \
     --query "Reservations[].Instances[].Placement.AvailabilityZone" \
