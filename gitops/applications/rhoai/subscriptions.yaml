@@ -6,6 +6,8 @@ metadata:
     operators.coreos.com/servicemeshoperator.openshift-operators: ""
   name: servicemeshoperator
   namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: stable
   installPlanApproval: Automatic
@@ -20,6 +22,8 @@ metadata:
     operators.coreos.com/serverless-operator.openshift-serverless: ""
   name: serverless-operator
   namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: stable
   installPlanApproval: Automatic
@@ -35,6 +39,8 @@ metadata:
     operators.coreos.com/openshift-pipelines-operator-rh.openshift-operators: ""
   name: openshift-pipelines-operator-rh
   namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: latest
   installPlanApproval: Automatic
@@ -49,6 +55,8 @@ metadata:
     operators.coreos.com/rhods-operator.redhat-ods-operator: ""
   name: rhods-operator
   namespace: redhat-ods-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: fast # stable 2.8, fast 2.9
   installPlanApproval: Automatic

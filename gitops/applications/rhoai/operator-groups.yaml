@@ -4,5 +4,7 @@ kind: OperatorGroup
 metadata:
   name: redhat-ods-operator-og
   namespace: redhat-ods-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   upgradeStrategy: Default
