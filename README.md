@@ -32,7 +32,7 @@ curl -Ls https://raw.githubusercontent.com/eformat/sno-for-100/main/sno-for-100.
 Bootstrap ArgoCD operator and everything using gitops (GPU, Cluster PerfEnhancements, CertManager, GPU Setup, LVM+Noobaa/S3 Storage, RHOAI). Your SNO will reboot for MachineConfig updates.
 
 ```bash
-./gitops/install.sh
+./gitops/install.sh -d
 ```
 
 Create Users using htpasswd. Delete's the kubeadmin user.
@@ -55,7 +55,7 @@ Scale the RHOAI Platform down a bit so we free up some cpu.
 
 The [manual instructions](MANUAL_INSTALL.md) are still here if you want to run them.
 
-### Model Notebooks
+## Model Notebooks
 
 Now open RHOAI and Login.
 
@@ -99,3 +99,11 @@ Open the [sno-instructlab.ipynb](sno-instructlab.ipynb) notebook and have a play
 ### Model Serving
 
 Use RHOAI to serve the models with a llama-cpp custom runtime. See [Serving README.md](serving/README.md)
+
+## Delete SNO instance
+
+If you no longer need your instance, to remove all related aws objects just run **inside your `$RUNDIR`**.
+
+```bash
+openshift-install destroy cluster --dir=cluster
+```
