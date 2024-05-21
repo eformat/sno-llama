@@ -220,8 +220,8 @@ wait_for_ingress_issuer() {
 }
 
 wait_for_api_cert() {
-    oc wait --for=condition=Ready certificate api-cert -n openshift-config
     local i=0
+    oc wait --for=condition=Ready certificate api-cert -n openshift-config
     until [ "$?" == 0 ]
     do
         echo -e "Wait for certificate api-cert to be ready."
@@ -236,8 +236,8 @@ wait_for_api_cert() {
 }
 
 wait_for_ingress_cert() {
-    oc wait --for=condition=Ready certificate apps-cert -n openshift-ingress
     local i=0
+    oc wait --for=condition=Ready certificate apps-cert -n openshift-ingress
     until [ "$?" == 0 ]
     do
         echo -e "Wait for certificate apps-cert to be ready."
