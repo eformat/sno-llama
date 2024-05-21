@@ -169,6 +169,7 @@ wait_for_machine_config() {
             echo -e "🕱${RED}Failed - MachineConfig 99-kubens-master never found?.${NC}"
             exit 1
         fi
+        oc get mc 99-kubens-master 2>&1>/dev/null
     done
 }
 
