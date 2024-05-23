@@ -43,7 +43,7 @@ s3 cp Meta-Llama-3-8B-Instruct-Q8_0.gguf s3://models/Meta-Llama-3-8B-Instruct-Q8
 
 In RHOAI - Browse to Serving Runtimes > Add Serving Runtime > Start from scratch
 
-Add in LLamaCPP template:
+Add in LLamaCPP template - select Single Model + REST.
 
 ```yaml
 apiVersion: serving.kserve.io/v1alpha1
