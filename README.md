@@ -102,7 +102,7 @@ Use RHOAI to serve the models with a llama-cpp custom runtime. See [Serving READ
 
 ## Delete SNO instance
 
-If you no longer need your instance, to remove all related aws objects just run **inside your `$RUNDIR`**.
+If you no longer need your instance, to remove all related aws objects just run inside your `$RUNDIR`.
 
 ```bash
 openshift-install destroy cluster --dir=cluster
