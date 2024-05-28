@@ -8,7 +8,7 @@ spec:
   destination:
     namespace: nvidia-gpu-operator
     server: https://kubernetes.default.svc
-  project: local-cluster
+  project: default
   sources:
     - chart: console-plugin-nvidia-gpu
       helm: {}
