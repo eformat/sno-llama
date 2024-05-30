@@ -52,6 +52,22 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   labels:
+    operators.coreos.com/authorino-operator.openshift-operators: ""
+  name: authorino-operator
+  namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: authorino-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
     operators.coreos.com/rhods-operator.redhat-ods-operator: ""
   name: rhods-operator
   namespace: redhat-ods-operator

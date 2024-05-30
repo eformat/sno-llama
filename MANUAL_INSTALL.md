@@ -584,6 +584,22 @@ cat <<EOF | oc create -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
+  labels:
+    operators.coreos.com/authorino-operator.openshift-operators: ""
+  name: authorino-operator
+  namespace: openshift-operators
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: authorino-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+EOF
+
+cat <<EOF | oc create -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
   generation: 1
   labels:
     operators.coreos.com/openshift-pipelines-operator-rh.openshift-operators: ""
