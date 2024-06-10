@@ -11,6 +11,13 @@ oc -n openshift new-build \
   --strategy docker --dockerfile - --name ilab < instructlab/Dockerfile
 ```
 
+To build a particular version.
+
+```bash
+oc -n openshift new-build \
+  --strategy docker --dockerfile - --name ilab --build-arg ILAB_VERSION=0.16.1 --to ilab:0.16.1 < instructlab/Dockerfile
+```
+
 Import the image stream into RHOAI so it appears as a notebook image called `ilab`.
 
 ```bash
