@@ -104,7 +104,7 @@ metadata:
   name: lvms-operator
   namespace: openshift-storage
 spec:
-  channel: stable-4.16
+  channel: stable-4.15
   installPlanApproval: Automatic
   name: lvms-operator
   source: redhat-operators
@@ -161,7 +161,7 @@ metadata:
   name: odf-operator
   namespace: openshift-storage
 spec:
-  channel: stable-4.16
+  channel: stable-4.15
   installPlanApproval: Automatic
   name: odf-operator
   source: redhat-operators
