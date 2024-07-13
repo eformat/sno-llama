@@ -1,12 +1,12 @@
 # 2024.1
-FROM quay.io/modh/odh-pytorch-notebook@sha256:604c8c92a0751fe6573912f8689366855d3e7d28698eade4d7875f9afc9a2276
+FROM quay.io/modh/odh-pytorch-notebook@sha256:354f98690a02c5b2519da72be22555562c6652bc9db8ece2f3c03476fd6369ff
 
 USER 0
 WORKDIR /opt
 
 RUN NVCC_APPEND_FLAGS='-allow-unsupported-compiler' \
   CUDACXX=/usr/local/cuda/bin/nvcc \
-  CMAKE_ARGS="-DLLAMA_CUBLAS=on -DCMAKE_CUDA_ARCHITECTURES=all-major" \
+  CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all-major" \
   FORCE_CMAKE=1 \
   pip install llama-cpp-python[server] --no-cache-dir --force-reinstall --upgrade
 
