@@ -4,6 +4,8 @@ FROM quay.io/modh/odh-pytorch-notebook@sha256:354f98690a02c5b2519da72be22555562c
 USER 0
 WORKDIR /opt
 
+ENV LD_LIBRARY_PATH=/usr/lib64/:/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/cuda-12.1/compat
+
 RUN NVCC_APPEND_FLAGS='-allow-unsupported-compiler' \
   CUDACXX=/usr/local/cuda/bin/nvcc \
   CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all-major" \
