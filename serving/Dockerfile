@@ -18,6 +18,7 @@ ENV MODELLOCATION=/tmp/models
 ## Set value to "--chat_format chatml" for prompt formats
 ## see https://github.com/abetlen/llama-cpp-python/blob/main/llama_cpp/llama_chat_format.py
 ENV CHAT_FORMAT=""
+ENV NGL="-1"
 EXPOSE 8080
 
-ENTRYPOINT python3 -m llama_cpp.server --model ${MODELLOCATION}/${MODELNAME} ${CHAT_FORMAT} --host 0.0.0.0 --port 8080
+ENTRYPOINT python3 -m llama_cpp.server --model ${MODELLOCATION}/${MODELNAME} ${CHAT_FORMAT} --host 0.0.0.0 --port 8080 --n_gpu_layers ${NGL}
