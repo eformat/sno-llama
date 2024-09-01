@@ -1,0 +1,83 @@
+---
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  annotations:
+    opendatahub.io/accelerator-name: migrated-gpu
+    opendatahub.io/apiProtocol: REST
+    opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
+    opendatahub.io/template-display-name: LLamaCPP
+    opendatahub.io/template-name: llamacpp
+    openshift.io/display-name: sno-granite-code-128k
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: sno-granite-code-128k
+  namespace: llama-serving
+spec:
+  builtInAdapter:
+    modelLoadingTimeoutMillis: 90000
+  containers:
+  - env:
+    - name: MODELNAME
+      value: granite-8b-code-instruct-128k-q8_0.gguf
+    - name: MODELLOCATION
+      value: /mnt/models
+    - name: CHAT_FORMAT
+      value: "--chat_format llama-2"
+    - name: N_CTX
+      value: "35840"
+    image: image-registry.openshift-image-registry.svc:5000/openshift/llama-serving
+    name: kserve-container
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    resources:
+      requests:
+        cpu: 300m
+        memory: 500Mi
+    volumeMounts:
+    - mountPath: /dev/shm
+      name: shm
+  multiModel: false
+  supportedModelFormats:
+  - autoSelect: true
+    name: gguf
+  volumes:
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 2Gi
+    name: shm
+---
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    openshift.io/display-name: sno-granite-code-128k
+    serving.knative.openshift.io/enablePassthrough: "true"
+    sidecar.istio.io/inject: "true"
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: sno-granite-code-128k
+  namespace: llama-serving
+spec:
+  predictor:
+    maxReplicas: 1
+    minReplicas: 1
+    model:
+      modelFormat:
+        name: gguf
+      name: ""
+      resources:
+        limits:
+          nvidia.com/gpu: "1"
+        requests:
+          nvidia.com/gpu: "1"
+      runtime: sno-granite-code-128k
+      storage:
+        key: connection-minio
+        path: granite-8b-code-instruct-128k-q8_0.gguf
+    tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu
+      operator: Exists
