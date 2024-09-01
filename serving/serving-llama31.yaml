@@ -8,22 +8,24 @@ metadata:
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
     opendatahub.io/template-display-name: LLamaCPP
     opendatahub.io/template-name: llamacpp
-    openshift.io/display-name: sno-code-llama
+    openshift.io/display-name: sno-llama31
   labels:
     opendatahub.io/dashboard: "true"
-  name: sno-code-llama
+  name: sno-llama31
   namespace: llama-serving
 spec:
   builtInAdapter:
-    modelLoadingTimeoutMillis: 90000
+    modelLoadingTimeoutMillis: 600000
   containers:
   - env:
     - name: MODELNAME
-      value: codellama-7b-instruct.Q8_0.gguf
+      value: Meta-Llama-3.1-8B-Instruct-Q8_0.gguf
     - name: MODELLOCATION
       value: /mnt/models
     - name: CHAT_FORMAT
-      value: "--chat_format llama-2"
+      value: --chat_format llama-3
+    - name: N_CTX
+      value: "71680"
     image: image-registry.openshift-image-registry.svc:5000/openshift/llama-serving
     name: kserve-container
     ports:
@@ -50,17 +52,16 @@ apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   annotations:
-    openshift.io/display-name: sno-code-llama
+    openshift.io/display-name: sno-llama31
     serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
   labels:
     opendatahub.io/dashboard: "true"
-  name: sno-code-llama
+  name: sno-llama31
   namespace: llama-serving
 spec:
   predictor:
-    maxReplicas: 1
     minReplicas: 1
     model:
       modelFormat:
@@ -71,10 +72,10 @@ spec:
           nvidia.com/gpu: "1"
         requests:
           nvidia.com/gpu: "1"
-      runtime: sno-code-llama
+      runtime: sno-llama31
       storage:
-        key: connection-noobaa
-        path: codellama-7b-instruct.Q8_0.gguf
+        key: connection-minio
+        path: Meta-Llama-3.1-8B-Instruct-Q8_0.gguf
     tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu

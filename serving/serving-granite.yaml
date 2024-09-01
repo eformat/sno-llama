@@ -54,8 +54,6 @@ metadata:
     serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
-  finalizers:
-  - inferenceservice.finalizers
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-granite
