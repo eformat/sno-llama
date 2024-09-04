@@ -20,6 +20,8 @@ ENV MODELLOCATION=/tmp/models
 ENV CHAT_FORMAT=""
 ENV NGL="-1"
 ENV N_CTX="2048"
+# ENV NP="1" # not supported yet https://github.com/abetlen/llama-cpp-python/issues/1329
+ENV INTERRUPT_REQUESTS="True"
 EXPOSE 8080
 
-ENTRYPOINT python3 -m llama_cpp.server --model ${MODELLOCATION}/${MODELNAME} ${CHAT_FORMAT} --host 0.0.0.0 --port 8080 --n_gpu_layers ${NGL} --n_ctx ${N_CTX}
+ENTRYPOINT python3 -m llama_cpp.server --model ${MODELLOCATION}/${MODELNAME} ${CHAT_FORMAT} --host 0.0.0.0 --port 8080 --n_gpu_layers ${NGL} --n_ctx ${N_CTX} --interrupt_requests ${INTERRUPT_REQUESTS}
