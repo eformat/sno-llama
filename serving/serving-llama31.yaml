@@ -26,6 +26,8 @@ spec:
       value: --chat_format llama-3
     - name: N_CTX
       value: "71680"
+    - name: INTERRUPT_REQUESTS
+      value: "False"
     image: image-registry.openshift-image-registry.svc:5000/openshift/llama-serving
     name: kserve-container
     ports:
