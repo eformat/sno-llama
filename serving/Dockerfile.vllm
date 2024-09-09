@@ -3,6 +3,7 @@ USER root
 # https://github.com/vllm-project/vllm/issues/7978 transformers-4.45.0.dev0
 #RUN --mount=type=cache,target=/root/.cache/pip \
 #    python3 -m pip install git+https://github.com/huggingface/transformers
-# https://github.com/huggingface/transformers/pull/32908/files
+# https://issues.redhat.com/browse/RHOAIENG-12238
+# --chat-template /workspace/templates/template_chatml.jinja \
 COPY tokenization_utils_fast.py /opt/vllm/lib64/python3.11/site-packages/transformers/tokenization_utils_fast.py
 USER 2000
