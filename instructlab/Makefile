@@ -1,7 +1,7 @@
 # Image URL to use all building/pushing image targets
 REGISTRY ?= quay.io
 REPOSITORY ?= $(REGISTRY)/eformat/sno-llama-ilab
-ILAB_VERSION ?= 0.14.1
+ILAB_VERSION ?= 0.17.1
 
 IMG := $(REPOSITORY):${ILAB_VERSION}
 
