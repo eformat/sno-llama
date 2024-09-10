@@ -89,6 +89,12 @@ spec:
 
 Create a RHOAI Data Science project called `llama-serving`.
 
+You may want to set the project up for KServe single model deployments using:
+
+```bash
+oc label namespace llama-serving modelmesh-enabled=false --overwrite
+```
+
 Create S3 secret:
 
 ```bash
