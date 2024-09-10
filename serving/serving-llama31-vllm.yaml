@@ -1,8 +1,10 @@
+---
 apiVersion: serving.kserve.io/v1alpha1
 kind: ServingRuntime
 metadata:
   annotations:
-    opendatahub.io/accelerator-name: migrated-gpu
+    enable-route: 'true'
+    opendatahub.io/accelerator-name: nvidia-gpu
     opendatahub.io/apiProtocol: REST
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
     opendatahub.io/template-display-name: vLLM ServingRuntime for KServe
@@ -11,6 +13,7 @@ metadata:
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-llama31-vllm
+  namespace: llama-serving
 spec:
   annotations:
     prometheus.io/path: /metrics
@@ -46,6 +49,7 @@ metadata:
     serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    serving.kserve.io/deploymentMode: Serverless
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-llama31-vllm
