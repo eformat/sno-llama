@@ -20,3 +20,4 @@ spec:
        deviceSelector:
          paths:
          - /dev/disk/by-path/pci-0000:23:00.0-nvme-1
+         - /dev/disk/by-path/pci-0000:21:00.0-nvme-1
