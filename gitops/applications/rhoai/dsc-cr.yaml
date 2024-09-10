@@ -15,12 +15,16 @@ spec:
       managementState: Managed
     datasciencepipelines:
       managementState: Managed
-    ingressGateway:
-      certificate:
-        secretName: tls-apps
-        type: Provided
     kserve:
       managementState: Managed
+      serving:
+        ingressGateway:
+          certificate:
+            secretName: tls-apps
+            type: Provided
+            # type: SelfSigned
+        managementState: Managed
+        name: knative-serving
     kueue:
       managementState: Managed
     modelmeshserving:
