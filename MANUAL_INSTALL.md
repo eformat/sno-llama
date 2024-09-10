@@ -698,6 +698,8 @@ oc get pods -n redhat-ods-applications
 
 Remove the CPU Limits on the notebooks and server so we can better utilize resources.
 
+`FIXME`: this stops the "Deploy Model" button from validating in the UI in recent versions.
+
 ```bash
 cat <<EOF | oc apply -f-
 apiVersion: opendatahub.io/v1alpha
