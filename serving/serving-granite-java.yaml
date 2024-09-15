@@ -23,7 +23,7 @@ spec:
     - name: MODELLOCATION
       value: /mnt/models
     - name: CHAT_FORMAT
-      value: --chat_format llama-2
+      value: --chat_format chatml
     - name: N_CTX
       value: "32768"
     - name: INTERRUPT_REQUESTS
