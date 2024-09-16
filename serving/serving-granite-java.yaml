@@ -25,7 +25,7 @@ spec:
     - name: CHAT_FORMAT
       value: --chat_format chatml
     - name: N_CTX
-      value: "32768"
+      value: "10000"
     - name: INTERRUPT_REQUESTS
       value: "False"
     image: image-registry.openshift-image-registry.svc:5000/openshift/llama-serving
