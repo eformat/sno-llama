@@ -26,7 +26,7 @@ spec:
         - --port=8080
         - --model=/mnt/models/Meta-Llama-3.1-8B-Instruct-Q8_0.gguf
         - --quantization=gguf
-        - --max-model-len=80000
+        - --max-model-len=70000
         - --enforce-eager
       env:
         - name: HF_HOME
