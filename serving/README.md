@@ -85,6 +85,40 @@ spec:
       name: gguf
 ```
 
+```bash
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+labels:
+  opendatahub.io/dashboard: "true"
+metadata:
+  annotations:
+    openshift.io/display-name: LLamaCPP
+    opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
+  name: llama-cpp
+spec:
+  builtInAdapter:
+    modelLoadingTimeoutMillis: 90000
+  containers:
+    - image: llama-cpp
+      name: kserve-container
+      volumeMounts:
+        - name: shm
+          mountPath: /dev/shm
+      ports:
+        - containerPort: 8000
+          protocol: TCP
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+  multiModel: false
+  supportedModelFormats:
+    - autoSelect: true
+      name: gguf
+```
+
+
 ### Deploy Serving Runtime Instances
 
 Create a RHOAI Data Science project called `llama-serving`.
