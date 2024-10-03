@@ -46,7 +46,7 @@ spec:
   tags:
   - annotations:
       opendatahub.io/notebook-python-dependencies: '[{"name":"JupyterLab","version":"3.6"},{"name":"Notebook","version":"6.5"}]'
-      opendatahub.io/notebook-software: '[{"name":"CUDA","version":"12.1"},{"name":"Python","version":"v3.9"},{"name":"ilab","version":"v0.17.1"}]'
+      opendatahub.io/notebook-software: '[{"name":"CUDA","version":"12.1"},{"name":"Python","version":"v3.11"},{"name":"ilab","version":"v0.18.4"}]'
       opendatahub.io/workbench-image-recommended: "true"
       openshift.io/imported-from: quay.io/modh/cuda-notebooks
     from:

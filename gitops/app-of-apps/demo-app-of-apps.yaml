@@ -2,20 +2,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rhoai
+  name: develop-app-of-apps
   namespace: openshift-gitops
+  labels:
+    rht-gitops.com/openshift-gitops: policies
 spec:
   destination:
     namespace: openshift-gitops
     server: 'https://kubernetes.default.svc'
   project: default
   source:
+    path: gitops/app-of-apps/demo
+    directory:
+      include: "*.yaml"
     repoURL: https://github.com/eformat/sno-llama.git
-    path: gitops/applications/rhoai/base
     targetRevision: main
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
     syncOptions:
       - Validate=true

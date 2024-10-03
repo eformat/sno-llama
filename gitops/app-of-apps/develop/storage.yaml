@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/eformat/sno-llama.git
-    path: gitops/applications/storage
+    path: gitops/applications/storage/base
     targetRevision: main
   syncPolicy:
     automated:

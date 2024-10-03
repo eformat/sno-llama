@@ -1,0 +1,22 @@
+---
+apiVersion: lvm.topolvm.io/v1alpha1
+kind: LVMCluster
+metadata:
+ name: sno-lvm
+ namespace: openshift-storage
+ annotations:
+   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+   argocd.argoproj.io/sync-wave: "2"
+spec:
+ storage:
+   deviceClasses:
+     - name: vgsno
+       default: true
+       thinPoolConfig:
+         name: thin-pool-1
+         overprovisionRatio: 10
+         sizePercent: 90
+       fstype: xfs
+       deviceSelector:
+         paths:
+         - /dev/disk/by-path/pci-0000:23:00.0-nvme-1
