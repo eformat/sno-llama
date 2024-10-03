@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: develop-app-of-apps
+  name: demo-app-of-apps
   namespace: openshift-gitops
   labels:
     rht-gitops.com/openshift-gitops: policies
