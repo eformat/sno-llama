@@ -5,3 +5,4 @@ resources:
   - subscriptions.yaml
   - dsc-cr.yaml
   - odh-dashboard.yaml
+  - accelerator-profile.yaml

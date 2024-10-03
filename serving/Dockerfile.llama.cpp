@@ -1,5 +1,5 @@
 # 2024.1
-FROM quay.io/modh/cuda-notebooks@sha256:3beed917f90b12239d57cf49c864c6249236c8ffcafcc7eb06b0b55272ef5b55 AS build
+FROM quay.io/modh/cuda-notebooks@sha256:d8295bcf45a6a522f78c07dc62634a7775fc434621973bd81db243a5a63a1ffa AS build
 USER root
 RUN dnf -y install https://rpmfind.net/linux/epel/9/Everything/x86_64/Packages/n/nvtop-3.1.0-2.el9.x86_64.rpm
 WORKDIR /opt/app-root/src
@@ -9,7 +9,7 @@ RUN cd /opt/app-root/src/llama.cpp && \
     cmake -B build -DLLAMA_CUDA=ON && \
     cmake --build build --config Release -j16
 
-FROM quay.io/modh/cuda-notebooks@sha256:3beed917f90b12239d57cf49c864c6249236c8ffcafcc7eb06b0b55272ef5b55
+FROM quay.io/modh/cuda-notebooks@sha256:d8295bcf45a6a522f78c07dc62634a7775fc434621973bd81db243a5a63a1ffa
 COPY --from=build /opt/app-root/src/llama.cpp/build/ggml/src/libggml.so /libggml.so
 COPY --from=build /opt/app-root/src/llama.cpp/build/src/libllama.so /libllama.so
 COPY --from=build /opt/app-root/src/llama.cpp/build/bin/llama-server /llama-server

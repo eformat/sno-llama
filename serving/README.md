@@ -11,6 +11,11 @@ oc -n openshift new-build \
   --strategy docker --dockerfile - --name llama-serving < serving/Dockerfile
 ```
 
+```bash
+oc -n openshift new-build \
+  --strategy docker --dockerfile - --name llama-cpp < serving/Dockerfile.llama.cpp
+```
+
 Monitor the build.
 
 ```bash
