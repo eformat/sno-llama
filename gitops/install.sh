@@ -251,7 +251,7 @@ EOF
 
 
 all() {
-    echo "🌴 BASE_DOMAIN set to $ENVIRONMENT"
+    echo "🌴 ENVIRONMENT set to $ENVIRONMENT"
     echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
     echo "🌴 CLUSTER_NAME set to $CLUSTER_NAME"
     echo "🌴 KUBECONFIG set to $KUBECONFIG"
