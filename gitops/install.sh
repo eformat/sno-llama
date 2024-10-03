@@ -6,6 +6,7 @@ readonly ORANGE='\033[38;5;214m'
 readonly NC='\033[0m' # No Color
 readonly RUN_DIR=$(pwd)
 
+ENVIRONMENT=${ENVIRONMENT:-develop}
 DRYRUN=${DRYRUN:-}
 BASE_DOMAIN=${BASE_DOMAIN:-}
 CLUSTER_NAME=${CLUSTER_NAME:-}
@@ -181,7 +182,7 @@ app_of_apps() {
 
     echo "🌴 Running app_of_apps..."
 
-    oc apply -f gitops/app-of-apps/develop-app-of-apps.yaml
+    oc apply -f gitops/app-of-apps/${ENVIRONMENT}-app-of-apps.yaml
 
     wait_for_machine_config
 
@@ -229,6 +230,7 @@ Fix SNO Instance Id's
 
 Optional arguments if not set in environment:
 
+        -e     ENVIRONMENT - cluster environment (or export ENVIRONMENT env var)
         -b     BASE_DOMAIN - openshift base domain (or export BASE_DOMAIN env var)
         -c     CLUSTER_NAME - openshift cluster name (or export CLUSTER_NAME env var)
         -k     KUBECONFIG - full path to the kubeconfig file
@@ -238,6 +240,7 @@ This script is rerunnable.
 Environment Variables:
     Optionally if not set on command line:
 
+        ENVIRONMENT
         BASE_DOMAIN
         CLUSTER_NAME
         KUBECONFIG
@@ -248,6 +251,7 @@ EOF
 
 
 all() {
+    echo "🌴 BASE_DOMAIN set to $ENVIRONMENT"
     echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
     echo "🌴 CLUSTER_NAME set to $CLUSTER_NAME"
     echo "🌴 KUBECONFIG set to $KUBECONFIG"
@@ -260,7 +264,7 @@ all() {
     gpu_config
 }
 
-while getopts db:c:k: opts; do
+while getopts db:c:e:k: opts; do
   case $opts in
     b)
       BASE_DOMAIN=$OPTARG
@@ -270,6 +274,9 @@ while getopts db:c:k: opts; do
       ;;
     d)
       DRYRUN="--no-dry-run"
+      ;;
+    e)
+      ENVIRONMENT=$OPTARG
       ;;
     k)
       KUBECONFIG=$OPTARG
@@ -286,6 +293,7 @@ shift `expr $OPTIND - 1`
 [ ! -z "$AWS_PROFILE" ] && echo "🌴 Using AWS_PROFILE: $AWS_PROFILE"
 [ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env or cli" && exit 1
 [ -z "$CLUSTER_NAME" ] && echo "🕱 Error: must supply CLUSTER_NAME in env or cli" && exit 1
+[ -z "$ENVIRONMENT" ] && echo "🕱 Error: must supply ENVIRONMENT in env or cli" && exit 1
 #[ -z "$KUBECONFIG" ] && [ -z "KUBECONFIG" ] && echo "🕱 Error: KUBECONFIG not set in env or cli" && exit 1
 [ -z "$AWS_PROFILE" ] && [ -z "$AWS_ACCESS_KEY_ID" ] && echo "🕱 Error: AWS_ACCESS_KEY_ID not set in env" && exit 1
 [ -z "$AWS_PROFILE" ] && [ -z "$AWS_SECRET_ACCESS_KEY" ] && echo "🕱 Error: AWS_SECRET_ACCESS_KEY not set in env" && exit 1
