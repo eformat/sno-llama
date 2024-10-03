@@ -14,7 +14,7 @@ COPY --from=build /opt/app-root/src/llama.cpp/build/src/libllama.so /libllama.so
 COPY --from=build /opt/app-root/src/llama.cpp/build/bin/llama-server /llama-server
 USER root
 RUN dnf -y install https://rpmfind.net/linux/epel/9/Everything/x86_64/Packages/n/nvtop-3.1.0-2.el9.x86_64.rpm
+USER 1001
 ENV LLAMA_ARG_HOST=0.0.0.0
 ENV LD_LIBRARY_PATH=/
-USER 1001
 ENTRYPOINT [ "/llama-server" ]
