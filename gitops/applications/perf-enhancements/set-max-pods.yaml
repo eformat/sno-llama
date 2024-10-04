@@ -12,6 +12,21 @@ spec:
     maxPods: 500
 ---
 apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: set-image-gc
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      custom-kubelet: large-pods
+  kubeletConfig:
+    imageMinimumGCAge: "2m0s"
+    imageGCHighThresholdPercent: 75
+    imageGCLowThresholdPercent: 70
+    evictionHard:
+      imagefs.available: "5%"
+---
+apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfigPool
 metadata:
   labels:
