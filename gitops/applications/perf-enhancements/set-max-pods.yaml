@@ -10,6 +10,9 @@ spec:
   kubeletConfig:
     podsPerCore: 0
     maxPods: 500
+    systemReserved:
+      cpu: 1500m
+      memory: 4096Mi
 ---
 apiVersion: machineconfiguration.openshift.io/v1
 kind: KubeletConfig
