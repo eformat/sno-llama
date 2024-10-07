@@ -13,7 +13,7 @@ spec:
     - chart: console-plugin-nvidia-gpu
       helm: {}
       repoURL: https://rh-ecosystem-edge.github.io/console-plugin-nvidia-gpu
-      targetRevision: 0.2.3
+      targetRevision: 0.2.4
   syncPolicy:
     automated:
       prune: true
