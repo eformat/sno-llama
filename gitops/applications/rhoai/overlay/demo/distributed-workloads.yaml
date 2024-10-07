@@ -16,11 +16,11 @@ spec:
     - name: "default-flavor"
       resources:
       - name: "cpu"
-        nominalQuota: 12
+        nominalQuota: 16
       - name: "memory"
         nominalQuota: 32Gi
       - name: "nvidia.com/gpu"
-        nominalQuota: 2
+        nominalQuota: 4
 ---
 apiVersion: kueue.x-k8s.io/v1beta1
 kind: LocalQueue
