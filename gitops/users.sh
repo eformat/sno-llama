@@ -26,8 +26,8 @@ add_cluster_admins() {
     for x in `seq 1 ${NO_ADMINS}`; do
         [ $x == 1 ] && oc adm policy add-cluster-role-to-user cluster-admin admin
         if [ "$?" != 0 ]; then
-        echo -e "🚨${RED}Failed - to run add_cluster_admins ?${NC}"
-        exit 1
+            echo -e "🚨${RED}Failed - to run add_cluster_admins ?${NC}"
+            exit 1
         fi
         [ $x -gt 1 ] && oc adm policy add-cluster-role-to-user cluster-admin admin$x
     done
