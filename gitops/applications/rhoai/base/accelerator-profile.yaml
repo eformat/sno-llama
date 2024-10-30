@@ -4,6 +4,9 @@ kind: AcceleratorProfile
 metadata:
   name: nvidia-gpu
   namespace: redhat-ods-applications
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   displayName: Nvidia L4 (Shared)
   enabled: true
