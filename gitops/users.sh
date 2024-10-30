@@ -12,14 +12,13 @@ create_htpasswd() {
     echo "🌴 Running create_htpasswd..."
     for x in `seq 1 ${NO_ADMINS}`; do
         [ $x == 1 ] && htpasswd -bBc /tmp/htpasswd admin ${ADMIN_PASSWORD}
+        if [ "$?" != 0 ]; then
+            echo -e "🚨${RED}Failed - to run create_htpasswd ?${NC}"
+            exit 1
+        fi
         [ $x -gt 1 ] && htpasswd -bB /tmp/htpasswd admin$x ${ADMIN_PASSWORD}
     done
-    if [ "$?" != 0 ]; then
-      echo -e "🚨${RED}Failed - to run create_htpasswd ?${NC}"
-      exit 1
-    else
-      echo "🌴 create_htpasswd ran OK"
-    fi
+    echo "🌴 create_htpasswd ran OK"
 }
 
 add_cluster_admins() {
