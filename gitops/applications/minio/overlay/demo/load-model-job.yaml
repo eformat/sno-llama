@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-model
+  labels:
+    app.kubernetes.io/name: minio
+spec:
+  template:
+    metadata:
+      name: load-model
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: load
+          image: minio/minio:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - "cd /tmp"
+            - "mc --config-dir=/tmp config host add local http://minio:9000 minio minio1234"
+            - "curl -LO https://huggingface.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q8_0.gguf"
+            - "mc --config-dir=/tmp cp Meta-Llama-3.1-8B-Instruct-Q8_0.gguf local/models"
+  backoffLimit: 5
