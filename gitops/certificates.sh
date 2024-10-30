@@ -284,7 +284,7 @@ check_done() {
 
     if [ "$?" != 0 ]; then
       echo -e "💀${ORANGE}Warn - check_done not ready for apps-cert, continuing ${NC}"
-      return
+      return 1
     else
       echo "🌴 apps-cert ran OK"
     fi
@@ -293,18 +293,18 @@ check_done() {
 
     if [ "$?" != 0 ]; then
       echo -e "💀${ORANGE}Warn - check_done not ready for api-cert, continuing ${NC}"
-      return
+      return 1
     else
       echo "🌴 api-cert ran OK"
     fi
 
-    exit 0
+    return 0
 }
 
 all() {
     echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
 
-    check_done
+    [ check_done == 0 ] return
 
     create_aws_secrets
     get_hosted_zone
