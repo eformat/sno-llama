@@ -304,7 +304,7 @@ check_done() {
 all() {
     echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
 
-    [ check_done == 0 ] return
+    if check_done; then return; fi
 
     create_aws_secrets
     get_hosted_zone
