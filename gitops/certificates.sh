@@ -278,8 +278,33 @@ patch_ingress() {
     fi
 }
 
+check_done() {
+    echo "🌴 Running check_done..."
+    oc -n openshift-ingress wait certs apps-cert --for=condition=Ready --timeout=2s
+
+    if [ "$?" != 0 ]; then
+      echo -e "💀${ORANGE}Warn - check_done not ready for apps-cert, continuing ${NC}"
+      return
+    else
+      echo "🌴 apps-cert ran OK"
+    fi
+
+    oc -n openshift-config wait certs api-cert --for=condition=Ready --timeout=2s
+
+    if [ "$?" != 0 ]; then
+      echo -e "💀${ORANGE}Warn - check_done not ready for api-cert, continuing ${NC}"
+      return
+    else
+      echo "🌴 api-cert ran OK"
+    fi
+
+    exit 0
+}
+
 all() {
     echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
+
+    check_done
 
     create_aws_secrets
     get_hosted_zone
