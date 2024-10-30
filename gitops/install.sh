@@ -156,6 +156,7 @@ wait_for_openshift_api() {
             exit 1
         fi
     done
+    echo "🌴 wait_for_openshift_api ran OK"
 }
 
 wait_for_machine_config() {
@@ -172,6 +173,7 @@ wait_for_machine_config() {
         fi
         oc get mc 99-kubens-master 2>&1>/dev/null
     done
+    echo "🌴 wait_for_machine_config ran OK"
 }
 
 app_of_apps() {
@@ -203,6 +205,7 @@ wait_for_gpu_cluster_policy() {
         fi
         STATUS=$(oc get clusterpolicies.nvidia.com gpu-cluster-policy -n openshift-operators -o jsonpath='{.status.state}')
     done
+    echo "🌴 wait_for_gpu_cluster_policy ran OK"
 }
 
 gpu_config() {
