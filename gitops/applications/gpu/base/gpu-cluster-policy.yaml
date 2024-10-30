@@ -47,7 +47,7 @@ spec:
   dcgmExporter:
     enabled: true
     config:
-      name: "console-plugin-nvidia-gpu"
+      name: "" # FIXME - console-plugin-nvidia-gpu - https://issues.redhat.com/browse/OCPBUGS-42628
     serviceMonitor:
       enabled: true
   dcgm:
