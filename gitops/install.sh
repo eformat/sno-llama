@@ -127,7 +127,7 @@ storage_class() {
     do
         echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
         ((i=i+1))
-        if [ $i -gt 100 ]; then
+        if [ $i -gt 500 ]; then
             echo -e "🕱${RED}Failed - oc never ready?.${NC}"
             exit 1
         fi
