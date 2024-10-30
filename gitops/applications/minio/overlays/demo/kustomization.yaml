@@ -1,0 +1,5 @@
+resources:
+- namespace.yaml
+- ../../base
+
+namespace: minio
