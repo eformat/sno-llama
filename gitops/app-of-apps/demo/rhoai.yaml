@@ -19,8 +19,3 @@ spec:
       selfHeal: true
     syncOptions:
       - Validate=true
-  ignore_differences:
-    - group: route.openshift.io
-      kind: Route
-      jsonPointers:
-        - /status/ingress/conditions
