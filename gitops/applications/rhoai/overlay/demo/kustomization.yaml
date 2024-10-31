@@ -4,6 +4,7 @@ resources:
   - distributed-workloads.yaml
   - namespace.yaml
   - llama-cpp-runtime-template.yaml
+  - serving-llama31-cpp.yaml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
