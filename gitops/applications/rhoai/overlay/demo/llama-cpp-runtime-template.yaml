@@ -5,6 +5,8 @@ metadata:
   annotations:
     opendatahub.io/apiProtocol: REST
     opendatahub.io/modelServingSupport: '["single"]'
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "2"
   labels:
     opendatahub.io/dashboard: "true"
   name: llama-cpp
