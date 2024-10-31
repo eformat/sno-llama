@@ -22,3 +22,5 @@ spec:
   ignore_differences:
     - group: route.openshift.io
       kind: Route
+      jsonPointers:
+        - /status/ingress/conditions
