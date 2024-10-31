@@ -1,0 +1,30 @@
+---
+namespace: dev-images-red-rag
+
+resources:
+  - ../../base
+  - pvc.yaml
+
+patches:
+  - target:
+      kind: Deployment
+      name: chatbot
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: chatbot
+      spec:
+        replicas: 1
+        template:
+          spec:
+            containers:
+              - name: chatbot
+                image: quay.io/eformat/chatbot-images:latest
+                volumeMounts:
+                - mountPath: /opt/app-root/src/images
+                  name: images
+            volumes:
+            - name: images
+              persistentVolumeClaim:
+                claimName: images

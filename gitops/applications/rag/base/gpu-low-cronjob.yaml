@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gpu-low
+---
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: gpu-low
+spec:
+  schedule: '*/5 * * * *'
+  concurrencyPolicy: Forbid
+  suspend: false
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          restartPolicy: Never
+          activeDeadlineSeconds: 500
+          serviceAccountName: gpu-low
+          schedulerName: default-scheduler
+          terminationGracePeriodSeconds: 30
+          securityContext: {}
+          containers:
+            - name: gpu-low
+              image: 'image-registry.openshift-image-registry.svc:5000/openshift/chatbot:latest'
+              command:
+                - /bin/bash
+                - '-c'
+                - >-
+                  if [[ $(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits) -lt 500 ]]; then
+                    echo "restarting deployment/chatbot low gpu memory ..."
+                    oc rollout restart deployment/chatbot
+                  else
+                    oc get deployment/chatbot
+                    echo "gpu memory ok ..."
+                  fi
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              imagePullPolicy: Always
+          dnsPolicy: ClusterFirst
+          serviceAccount: gpu-low
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gpu-low
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "update", "watch", "patch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gpu-low
+subjects:
+  - kind: ServiceAccount
+    name: gpu-low
+roleRef:
+  kind: Role
+  name: gpu-low
+  apiGroup: rbac.authorization.k8s.io

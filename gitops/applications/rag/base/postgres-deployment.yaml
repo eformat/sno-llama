@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+    app.kubernetes.io/component: postgres
+    app.kubernetes.io/instance: postgres
+  name: postgres
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deployment: postgres
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deployment: postgres
+    spec:
+      containers:
+      - env:
+        - name: POSTGRESQL_ADMIN_PASSWORD
+          value: password
+        - name: POSTGRESQL_DATABASE
+          value: vectordb
+        - name: POSTGRESQL_PASSWORD
+          value: password
+        - name: POSTGRESQL_USER
+          value: user
+        image: quay.io/rh-aiservices-bu/postgresql-15-pgvector-c9s:latest
+        imagePullPolicy: IfNotPresent
+        name: postgres
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/pgsql/data
+          name: data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data

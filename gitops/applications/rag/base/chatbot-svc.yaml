@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: chatbot
+    app.kubernetes.io/component: chatbot
+    app.kubernetes.io/instance: chatbot
+  name: chatbot
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    deployment: chatbot
+  sessionAffinity: None
+  type: ClusterIP

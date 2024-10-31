@@ -1,0 +1,8 @@
+---
+resources:
+  - pvc.yaml
+  - postgres-svc.yaml
+  - postgres-deployment.yaml
+  - chatbot-svc.yaml
+  - chatbot-deployment.yaml
+  - chatbot-route.yaml
