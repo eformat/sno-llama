@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-red-rag
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-images-red-rag
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quarkus-rag

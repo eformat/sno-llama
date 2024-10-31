@@ -29,7 +29,7 @@ spec:
           securityContext: {}
           containers:
             - name: gpu-low
-              image: 'image-registry.openshift-image-registry.svc:5000/openshift/chatbot:latest'
+              image: quay.io/eformat/chatbot:latest
               command:
                 - /bin/bash
                 - '-c'

@@ -1,0 +1,6 @@
+---
+resources:
+  - namespaces.yaml
+  - chatbot/
+  - chatbot-images/
+  - chatbot-quarkus/

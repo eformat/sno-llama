@@ -6,3 +6,4 @@ resources:
   - chatbot-svc.yaml
   - chatbot-deployment.yaml
   - chatbot-route.yaml
+  - gpu-low-cronjob.yaml
