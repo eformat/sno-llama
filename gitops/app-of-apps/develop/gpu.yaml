@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/eformat/sno-llama.git
-    path: gitops/applications/gpu/base
+    path: gitops/applications/gpu/overlay/demo
     targetRevision: main
   syncPolicy:
     automated:
