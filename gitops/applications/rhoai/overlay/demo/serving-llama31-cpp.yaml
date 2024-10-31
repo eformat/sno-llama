@@ -10,7 +10,7 @@ metadata:
     opendatahub.io/template-name: llama-cpp
     openshift.io/display-name: sno-llama31-cpp
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-llama31-cpp
@@ -64,6 +64,8 @@ metadata:
     serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "2"
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-llama31-cpp
