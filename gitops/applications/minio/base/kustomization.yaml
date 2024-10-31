@@ -1,6 +1,7 @@
+---
 resources:
-- minio-ingress.yaml
-- minio-pvc.yaml
-- minio-dc.yaml
-- minio-service.yaml
-- minio-job.yaml
+  - minio-ingress.yaml
+  - minio-pvc.yaml
+  - minio-dc.yaml
+  - minio-service.yaml
+  - minio-job.yaml
