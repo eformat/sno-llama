@@ -3,6 +3,7 @@ namespace: quarkus-rag
 
 resources:
   - ../../../base
+  - load-db-job.yaml
 
 patches:
   - target:

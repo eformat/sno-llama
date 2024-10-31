@@ -3,6 +3,7 @@ namespace: dev-red-rag
 
 resources:
   - ../../../base
+  - load-db-job.yaml
 
 patches:
   - target:

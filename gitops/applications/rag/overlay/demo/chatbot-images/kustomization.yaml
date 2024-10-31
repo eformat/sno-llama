@@ -4,6 +4,7 @@ namespace: dev-images-red-rag
 resources:
   - ../../../base
   - pvc.yaml
+  - load-db-job.yaml
 
 patches:
   - target:

@@ -1,0 +1,36 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-db
+  labels:
+    app.kubernetes.io/name: chatbot
+spec:
+  template:
+    metadata:
+      name: load-db
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: load
+          image: quay.io/eformat/rag-postgres-data:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PGPASSWORD
+              value: password
+            - name: PROJECT
+              value: quarkus-rag
+          command:
+            - /bin/bash
+            - -c
+            - |
+              while true; do psql -h postgres -p 5432 -d vectordb -U postgres -c "SELECT current_database();" 1>/dev/null;
+                if [ $? -ne 0 ]; then
+                  echo "waiting for postgres connection..."
+                  sleep 5
+                fi
+              done
+              set -x
+              psql -h postgres -p 5432 -d vectordb -U postgres -c "CREATE EXTENSION vector;"
+              pg_restore -h postgres -p 5432 -d vectordb -U postgres -v /${PROJECT}/langchain_pg_collection.dmp
+              pg_restore -h postgres -p 5432 -d vectordb -U postgres -v /${PROJECT}/langchain_pg_embedding.dmp
