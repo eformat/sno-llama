@@ -30,7 +30,10 @@ spec:
       containers:
       - env:
         - name: INFERENCE_SERVER_URL
-          value: http://localhost:8000/v1
+          valueFrom:
+            secretKeyRef:
+              name: inference
+              key: server
         - name: DB_CONNECTION_STRING
           value: postgresql+psycopg://postgres:password@postgres:5432/vectordb
         image: image-registry.openshift-image-registry.svc:5000/openshift/chatbot:latest

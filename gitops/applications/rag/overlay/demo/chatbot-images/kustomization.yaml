@@ -2,7 +2,7 @@
 namespace: dev-images-red-rag
 
 resources:
-  - ../../base
+  - ../../../base
   - pvc.yaml
 
 patches:

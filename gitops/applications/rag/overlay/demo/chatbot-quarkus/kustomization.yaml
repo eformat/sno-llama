@@ -1,8 +1,8 @@
 ---
-namespace: dev-red-rag
+namespace: quarkus-rag
 
 resources:
-  - ../../base
+  - ../../../base
 
 patches:
   - target:
@@ -14,9 +14,9 @@ patches:
       metadata:
         name: chatbot
       spec:
-        replicas: 2
+        replicas: 1
         template:
           spec:
             containers:
               - name: chatbot
-                image: quay.io/eformat/chatbot:latest
+                image: quay.io/eformat/chatbot-quarkus:latest
