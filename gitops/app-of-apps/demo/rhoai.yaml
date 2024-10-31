@@ -19,4 +19,6 @@ spec:
       selfHeal: true
     syncOptions:
       - Validate=true
-      - IgnoreExtraneous=true
+  ignore_differences:
+    - group: route.openshift.io
+      kind: Route
