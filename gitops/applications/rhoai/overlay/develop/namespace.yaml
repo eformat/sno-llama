@@ -1,0 +1,9 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: llama-serving
+  labels:
+    maistra.io/member-of: istio-system
+    modelmesh-enabled: "false"
+    opendatahub.io/dashboard: "true"

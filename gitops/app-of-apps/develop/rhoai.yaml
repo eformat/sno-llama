@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/eformat/sno-llama.git
-    path: gitops/applications/rhoai/overlay/demo
+    path: gitops/applications/rhoai/overlay/develop
     targetRevision: main
   syncPolicy:
     automated:
