@@ -1,0 +1,42 @@
+---
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  annotations:
+    opendatahub.io/apiProtocol: REST
+    opendatahub.io/modelServingSupport: '["single"]'
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: llama-cpp
+  namespace: redhat-ods-applications
+objects:
+- apiVersion: serving.kserve.io/v1alpha1
+  kind: ServingRuntime
+  labels:
+    opendatahub.io/dashboard: "true"
+  metadata:
+    annotations:
+      opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
+      openshift.io/display-name: LLamaCPP
+    name: llama-cpp
+  spec:
+    builtInAdapter:
+      modelLoadingTimeoutMillis: 90000
+    containers:
+    - image: llama-cpp
+      name: kserve-container
+      ports:
+      - containerPort: 8000
+        protocol: TCP
+      volumeMounts:
+      - mountPath: /dev/shm
+        name: shm
+      volumes:
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 1Gi
+        name: shm
+    multiModel: false
+    supportedModelFormats:
+    - autoSelect: true
+      name: gguf
