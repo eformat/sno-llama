@@ -36,7 +36,7 @@ patches:
                   - 'xzvf'
                   - images/images-all.tar.gz
                   - '-C'
-                  - /opt/app-root/src'
+                  - images'
                 image: quay.io/eformat/chatbot-images:latest
                 imagePullPolicy: IfNotPresent
                 name: extract-images
