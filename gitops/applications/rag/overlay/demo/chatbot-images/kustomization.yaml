@@ -26,7 +26,7 @@ patches:
                   - /dev-images-red-rag/images-all.tar.gz
                   - /opt/app-root/src/images/images-all.tar.gz
                 image: quay.io/eformat/rag-postgres-data:latest
-                imagePullPolicy: IfNotPresent
+                imagePullPolicy: Always
                 name: copy-images
                 volumeMounts:
                 - mountPath: /opt/app-root/src/images
