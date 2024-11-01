@@ -19,6 +19,29 @@ patches:
         replicas: 1
         template:
           spec:
+            initContainers:
+              - command:
+                  - cp
+                  - '-n'
+                  - /dev-images-red-rag/images-all.tar.gz
+                  - /opt/app-root/src/images/images-all.tar.gz
+                image: quay.io/eformat/rag-postgres-data:latest
+                imagePullPolicy: IfNotPresent
+                name: copy-images
+                volumeMounts:
+                - mountPath: /opt/app-root/src/images
+                  name: images
+              - command:
+                  - tar
+                  - 'xzvf'
+                  - images.tar.gz 
+                  - '-C /opt/app-root/src'
+                image: quay.io/eformat/chatbot-images:latest
+                imagePullPolicy: IfNotPresent
+                name: extract-images
+                volumeMounts:
+                - mountPath: /opt/app-root/src/images
+                  name: images
             containers:
               - name: chatbot
                 image: quay.io/eformat/chatbot-images:latest
