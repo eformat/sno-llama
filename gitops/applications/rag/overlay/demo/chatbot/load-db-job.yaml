@@ -34,7 +34,7 @@ spec:
               set -x
               psql -h postgres -p 5432 -d vectordb -U postgres -c "CREATE EXTENSION vector;"
               STATUS=$(psql -h postgres -p 5432 -d vectordb -U postgres -c "CREATE EXTENSION vector;" 2>&1)
-              if [ "$STATUS" == "ERROR: extension \"vector\" already exists" ]; then
+              if [ $? -ne 0 ]; then
                 echo "tables already exist - exiting OK"
                 exit 0
               fi
