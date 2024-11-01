@@ -32,11 +32,10 @@ patches:
                 - mountPath: /opt/app-root/src/images
                   name: images
               - command:
-                  - tar
-                  - 'xzvf'
-                  - images/images-all.tar.gz
-                  - '-C'
-                  - images'
+                  - /bin/bash
+                  - -c
+                  - |
+                    tar xzvf images/images-all.tar.gz -C images
                 image: quay.io/eformat/chatbot-images:latest
                 imagePullPolicy: IfNotPresent
                 name: extract-images
