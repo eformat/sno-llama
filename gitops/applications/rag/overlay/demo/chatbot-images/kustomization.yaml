@@ -35,7 +35,7 @@ patches:
                   - /bin/bash
                   - -c
                   - |
-                    tar xzvf images/images-all.tar.gz -C images
+                    tar xzvf images/images-all.tar.gz -C .
                 image: quay.io/eformat/chatbot-images:latest
                 imagePullPolicy: IfNotPresent
                 name: extract-images
