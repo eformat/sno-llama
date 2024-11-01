@@ -24,11 +24,12 @@ spec:
             - /bin/bash
             - -c
             - |
-              while true; do psql -h postgres -p 5432 -d vectordb -U postgres -c "SELECT current_database();" 1>/dev/null;
-                if [ $? -ne 0 ]; then
-                  echo "waiting for postgres connection..."
-                  sleep 5
-                fi
+              STATUS=$(pg_isready -h postgres -p 5432 -d vectordb -U postgres)
+              until [ "$STATUS" == "postgres:5432 - accepting connections" ]
+              do 
+                echo "waiting for postgres connection..."
+                sleep 5
+                STATUS=$(pg_isready -q -h postgres -p 5432 -d vectordb -U postgres)
               done
               set -x
               psql -h postgres -p 5432 -d vectordb -U postgres -c "CREATE EXTENSION vector;"
