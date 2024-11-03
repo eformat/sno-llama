@@ -1,0 +1,60 @@
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: argocd
+spec:
+  applicationMenu:
+    section: SRE
+    imageURL: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
+  href: https://global-policy-server-openshift-gitops.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: argocd
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: minio
+spec:
+  applicationMenu:
+    section: SRE
+    imageURL: https://min.io/resources/img/logo/MINIO_Bird.png
+  href: https://minio-minio.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: minio
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: dev-red-rag
+spec:
+  applicationMenu:
+    section: Application
+    imageURL: https://chatbot-dev-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN/logo?theme=light
+  href: https://chatbot-dev-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: developers chatobt
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: dev-images-red-rag
+spec:
+  applicationMenu:
+    section: Application
+    imageURL: https://chatbot-dev-images-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN/logo?theme=light
+  href: https://chatbot-dev-images-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: images chatobt
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: quarkus-rag
+spec:
+  applicationMenu:
+    section: Application
+    imageURL: https://chatbot-quarkus-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN/logo?theme=light
+  href: https://chatbot-quarkus-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: quarkus chatobt
