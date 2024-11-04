@@ -19,9 +19,3 @@ spec:
       selfHeal: true
     syncOptions:
       - Validate=true
-  ignoreDifferences:
-  - group: "*"
-    kind: "Route"
-    managedFieldsManagers:
-    - manager
-    - openshift-router
