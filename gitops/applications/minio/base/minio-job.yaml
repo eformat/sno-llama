@@ -19,3 +19,4 @@ spec:
             - /bin/sh
             - -c
             - "mc --config-dir=/tmp config host add local http://minio:9000 minio minio1234 && mc --config-dir=/tmp mb --ignore-existing local/data/ && mc --config-dir=/tmp mb --ignore-existing local/models/"
+  backoffLimit: 25
