@@ -4,10 +4,12 @@ kind: Application
 metadata:
   name: rag
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   destination:
     namespace: openshift-gitops
-    server: 'https://kubernetes.default.svc'
+    server: "https://kubernetes.default.svc"
   project: default
   source:
     repoURL: https://github.com/eformat/sno-llama.git
