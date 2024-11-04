@@ -20,6 +20,5 @@ spec:
     syncOptions:
       - Validate=true
   ignoreDifferences:
-  - group: "route.openshift.io"
-    kind: "Route"
+  - kind: "Route"
     namespace: istio-system
