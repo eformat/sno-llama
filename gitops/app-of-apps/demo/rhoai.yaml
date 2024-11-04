@@ -22,3 +22,5 @@ spec:
   ignoreDifferences:
   - group: "*"
     kind: "Route"
+    managedFieldsManagers:
+    - openshift-router
