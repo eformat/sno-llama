@@ -20,5 +20,8 @@ spec:
     syncOptions:
       - Validate=true
   ignoreDifferences:
-  - kind: "Route"
-    namespace: istio-system
+  - group: "*"
+    kind: "Route"
+    managedFieldsManagers:
+    - manager
+    - kube-controller-manager
