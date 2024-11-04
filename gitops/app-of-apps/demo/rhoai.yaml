@@ -23,4 +23,5 @@ spec:
   - group: "*"
     kind: "Route"
     managedFieldsManagers:
-    - operator
+    - manager
+    - openshift-router
