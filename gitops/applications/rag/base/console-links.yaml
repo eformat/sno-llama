@@ -33,7 +33,7 @@ spec:
     imageURL: https://chatbot-dev-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN/logo?theme=light
   href: https://chatbot-dev-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN
   location: ApplicationMenu
-  text: developers chatobt
+  text: developers chatbot
 ---
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
@@ -45,7 +45,7 @@ spec:
     imageURL: https://chatbot-dev-images-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN/logo?theme=light
   href: https://chatbot-dev-images-red-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN
   location: ApplicationMenu
-  text: images chatobt
+  text: images chatbot
 ---
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
@@ -57,4 +57,4 @@ spec:
     imageURL: https://chatbot-quarkus-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN/logo?theme=light
   href: https://chatbot-quarkus-rag.apps.$CLUSTER_NAME.$BASE_DOMAIN
   location: ApplicationMenu
-  text: quarkus chatobt
+  text: quarkus chatbot
