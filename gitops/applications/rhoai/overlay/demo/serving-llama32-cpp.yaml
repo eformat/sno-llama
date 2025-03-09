@@ -26,7 +26,7 @@ spec:
     - name: LLAMA_ARG_N_GPU_LAYERS
       value: "99999"
     - name: LLAMA_ARG_CTX_SIZE
-      value: "131072" # "71680"
+      value: "71680" # "71680"
     - name: LLAMA_ARG_N_PARALLEL
       value: "3"
     - name: LLAMA_ARG_ENDPOINT_METRICS
