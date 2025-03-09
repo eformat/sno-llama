@@ -87,7 +87,7 @@ spec:
       runtime: sno-llama32-cpp
       storage:
         key: connection-minio
-        path: Meta-Llama-3.2-8B-Instruct-Q8_0.gguf
+        path: Llama-3.2-3B-Instruct-Q8_0.gguf
     tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu
