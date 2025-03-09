@@ -28,6 +28,8 @@ spec:
         - --quantization=gguf
         - --max-model-len=131072
         - --enforce-eager
+        - --enable-auto-tool-choice
+        - --tool-call-parser llama3_json
       env:
         - name: HF_HOME
           value: /tmp/hf_home
