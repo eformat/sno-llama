@@ -4,8 +4,6 @@ kind: Application
 metadata:
   name: rhoai
   namespace: openshift-gitops
-  annotations:
-    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   destination:
     namespace: openshift-gitops
