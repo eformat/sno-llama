@@ -62,6 +62,7 @@ metadata:
     serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    security.opendatahub.io/enable-auth: "false"
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-llama31-cpp
