@@ -6,7 +6,7 @@ resources:
   - llama-cpp-runtime-template.yaml
 #  - serving-llama31-cpp.yaml
 #  - serving-llama32-cpp.yaml
-#  - serving-llama32-vllm.yaml
+  - serving-llama32-vllm.yaml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
