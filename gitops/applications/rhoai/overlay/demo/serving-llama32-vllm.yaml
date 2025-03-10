@@ -25,6 +25,7 @@ spec:
         - vllm.entrypoints.openai.api_server
         - --port=8080
         - --model=/mnt/models/Llama-3.2-3B-Instruct-Q8_0.gguf
+        - --served-model-name=Llama-3.2-3B-Instruct-Q8_0.gguf
         - --quantization=gguf
         - --max-model-len=131072
         - --enforce-eager
