@@ -25,7 +25,7 @@ spec:
         - vllm.entrypoints.openai.api_server
         - --port=8080
         - --model=/mnt/models
-        - --model-name=mhepburn-health-care-031325
+        - --served-model-name=mhepburn-health-care-031325
         - --chat-template=/app/data/template/tool_chat_template_granite.jinja
       env:
         - name: HF_HOME
