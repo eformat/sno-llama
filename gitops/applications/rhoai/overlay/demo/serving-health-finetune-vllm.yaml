@@ -26,7 +26,7 @@ spec:
         - --port=8080
         - --model=/mnt/models
         - --served-model-name=mhepburn-health-care-031325
-        - --max_model_len=32768
+        - --max_model_len=7184
         - --chat-template=/app/data/template/tool_chat_template_granite.jinja
       env:
         - name: HF_HOME
