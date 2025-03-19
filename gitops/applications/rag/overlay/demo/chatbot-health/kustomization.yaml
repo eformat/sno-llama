@@ -1,0 +1,22 @@
+---
+namespace: health
+
+resources:
+  - ../../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: chatbot
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: chatbot
+      spec:
+        replicas: 1
+        template:
+          spec:
+            containers:
+              - name: chatbot
+                image: quay.io/eformat/chatbot-health:latest
