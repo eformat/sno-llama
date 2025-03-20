@@ -4,4 +4,4 @@ resources:
   - chatbot/
   - chatbot-images/
   - chatbot-quarkus/
-  - chatbot-health/
+#  - chatbot-health/
