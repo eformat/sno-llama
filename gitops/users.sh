@@ -6,7 +6,7 @@ readonly ORANGE='\033[38;5;214m'
 readonly NC='\033[0m' # No Color
 readonly RUN_DIR=$(pwd)
 
-export NO_ADMINS=${NO_ADMINS:-2}
+export NO_ADMINS=${NO_ADMINS:-1}
 
 create_htpasswd() {
     echo "🌴 Running create_htpasswd..."
