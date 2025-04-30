@@ -100,6 +100,8 @@ setup_extra_storage() {
     --size ${EXTRA_DISK_SIZE} \
     --region=${AWS_DEFAULT_REGION})
 
+    sleep 5
+
     aws ec2 attach-volume \
     --volume-id $(echo ${vol} | jq -r '.VolumeId') \
     --instance-id ${INSTANCE_ID} \
