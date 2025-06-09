@@ -1,0 +1,7 @@
+FROM quay.io/modh/vllm:rhoai-2.21-cuda
+USER root
+RUN pip install bitsandbytes
+ADD tool_chat_template_deepseekr1.jinja /app/data/template/tool_chat_template_deepseekr1.jinja
+RUN microdnf -y install dnf
+RUN dnf -y install https://rpmfind.net/linux/epel/9/Everything/x86_64/Packages/n/nvtop-3.2.0-3.el9.x86_64.rpm
+USER 2000
